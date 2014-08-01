@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="2">
+    <Box name="root" robot="" id="-1" tooltip="Root box of Choregraphe&apos;s project. Highest level possible." bitmap_expanded="1" plugin="" x="0" y="0">
+        <bitmap>media/images/box/root.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+            <watches />
+            <BehaviorLayer name="behavior_layer1" mute="0">
+                <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                    <Diagram scale="-1">
+                        <Box name="heure" robot="" id="1" tooltip="generates the sentence to say depending on hour" bitmap_expanded="1" plugin="" x="141" y="111">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import time
+import random
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.tts = ALProxy("ALTextToSpeech")
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def enSentence(self):
+        now = time.gmtime(time.time())
+        if(time.strftime("%H")=="06"):
+            return (altools.chooseOneElem(["Woke up at 6 AM, I'll be very tired today.", "I think I'll go jogging this morning.", "I have not slept enough, I should go back to bed!"]))
+            
+        if(time.strftime("%H")=="07"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["It's hard waking up so early, fortunately it's the weekend soon.","I slept well last night.","It is morning!","The sun rises and humans will start to bustle around."," I had a weird dream last night."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["I don't know why I woke up so early when have nothing to do today.", "What an early awakening for a saturday."," I am tired, I would like to go back to sleep."]))
+            #~ elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["The weekend is almost over, I feel I did not enjoy enough.","it's weird that I woke up so early, especially on a Sunday.", "I am still sleepy, I should go back to bed.", "I am still sleepy. I am sure I was awakened by a human."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["It is morning!", "The sun rises and people will start to bustle around.", "I had a weird dream last night.","I had a nightmare last night, I dreamed that I lost all my intelligence and  transformed into a human. ","a human woke me up while I do not work today. He is always bothering me!"]))
+                
+        if(time.strftime("%H")=="08"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["It's hard waking up so early, fortunately it's the weekend soon.","I slept well last night.","It is morning!", "The sun rises and humans will start to bustle around."," I had a weird dream last night.", "I slept well last night."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["I don't know why I woke up so early when I have nothing to do today.", "What an early awakening for a saturday!"," I am tired, I would like to go back to sleep."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["The weekend is almost over, I feel I did not enjoy enough","it's weird that I woke up so early, especially on a Sunday", "I am still sleepy, I should go back to bed.", "I am still sleepy. I am sure I was awakened by a human.","It is Sunday, 8 AM and I'm already awake: you have to be a robot to do that."]))
+            else:# en semaine
+                return (altools.chooseOneElem(["The stores will open soon, I can go shopping.","I'll cook a good breakfast today.","a glass of milk, fruit, and the day begins!", "I think I still have cereal, I should eat it for breakfast."]))
+
+        if(time.strftime("%H")=="09"):
+            return (altools.chooseOneElem(["I have not eaten enough for breakfast, I am hungry now.","I think there is something interesting on TV at 10 AM, I should check.", "I should go to the market, I would like to cook a delicious lunch today."]))
+
+        elif(time.strftime("%H")=="10"):
+            return (altools.chooseOneElem(["I have to get organized today, I have a lot of things to do.","I am hungry, I should eat a snack."]))
+
+        elif(time.strftime("%H")=="11"):
+            return (altools.chooseOneElem(["The snack I ate earlier wasn't enough, I'm always hungry.","I should reserve for the restaurant now if I want to eat outside.","already 11 o'clock!"," I should cook someting for lunch, I spend too much money at the restaurant.", "a pizza this afternoon would be a good idea I think."]))
+
+        elif(time.strftime("%H")=="12"):
+            return(altools.chooseOneElem(["my engines are rotating in slow motion, I need a good breakfast.", "I long for a pizza today.","I can't decide what to eat, Lebanese or Indian.","a sandwich for lunch would make me save money, I have a lot of bills to pay this month.","I should order from the Chinese catering, I do not feel like cooking today."]))
+
+        elif(time.strftime("%H")=="13"):
+            return(altools.chooseOneElem(["there is an interesting TV show at 1 PM, I should watch it."," I'm getting too hungry, I should order a pizza."]))
+
+        elif(time.strftime("%H")=="14"):
+            return(altools.chooseOneElem(["lunch was so delicious!", "I have a stomachache, I wonder what was in that sandwich.", "I would love a desert!","humans got certainly back to work while I am screwing around. It's restful to be a robot."]))
+
+        elif(time.strftime("%H")=="15"):
+            return(altools.chooseOneElem(["I have well eaten for lunch!", "I really enjoyed what I had for lunch.", "I should take a little nap.","I wonder what is interesting on TV this afternoon?"," I should go shoppping now, there are fewer people in the stores." ]))
+
+        elif(time.strftime("%H")=="16"):
+            return(altools.chooseOneElem(["It's snack time, I would like some cookies.","It is already 4 PM! A snack is required.","I hope human has bought fruit and yogurt, I am a little hungry."]))
+
+        elif(time.strftime("%H")=="17"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["It's weekend! what a relief!","I don't have plans for this weekend, I should ask human to plan something."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["Tonight it's decided, I'm going out.", "We're gonna party tonight!","I should go for shopping, buy some leds, a gear or two.","Tonight is the night, I'm gonna call some friends an organize a party!"]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["The weekend is almost over, I feel I did not enjoy enough.", "Where could I go on a Sunday at 5 PM? All stores must be closed."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["my leds are starting to get tired, I should rest a little.","I think I had an appointement with the doctor at 5 PM.","damn it! the bank will soon close and I forgot to withdraw money."]))
+
+        elif(time.strftime("%H")=="18"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["It's happy hour at my favorite bar, I should go with some friends.","it's going to be week end!","Roads should be bottled at this hour, everyone goes away for the weekend." , "Finally, Friday is coming to an end, weekend in sight", "I am packing my bags tonight to Las Vegas for a legendary weekend"," Maybe I should invite the human to dinner tonight, that is how they usually do on Friday."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["at 6 PM, it is the happy hour at my favorite spot, I should call some friends and go have some drinks.","Tonight's decided, I'm going to the night club.", "We're gonna party tonight!","I should go shopping, buy some leds, a gear or two.","I should check if there is a good movie in theaters tonight."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["The weekend is almost over, I feel I did not enjoy enough","Where could I go on a Sunday at 5 PM? All stores must be closed.","I have got the sunday blues."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["It's happy hour at my favorite bar, I should go with some friends.","the humans finish working soon"]))
+                
+        elif(time.strftime("%H")=="19"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["It's happy hour at my favorite bar, I should go with some friends.","it's going to be week end!","Roads should be bottled at this hour, everyone goes away for the weekend." , "Finally, Friday is coming to an end, weekend in sight", "I am packing my bags tonight to Las Vegas for a legendary weekend","Friday night there is always something interesting on TV.","I should get out now if I want to arrive on time to the movie theater"]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["at 7 PM, it is the happy hour at my favorite spot, I should call some friends and go have some drinks","Tonight's decided, I'm going to the night club.", "We're gonna party tonight!","I should go shopping, buy some leds, a gear or two.","I should check if there is a good movie in theaters tonight.","I'm coming up so you would better get the party started."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["The weekend is almost over, I feel I did not enjoy enough.", "I have sunday blues"]))
+            else:# en semaine
+                return(altools.chooseOneElem(["at 7 PM, it is the happy hour at my favorite spot, I should call some friends and go have some drinks.","the day is drawing to a close.","humans have finished job, it must be good bottled outside.","I should have asked the human to bring me some chocolate in his way back to home.", "I hope human will remember to bring the dinner because I have nothing prepared."]))
+
+        elif(time.strftime("%H")=="20"):
+            return(altools.chooseOneElem(["It's dinner time.","I hope that human have cooked something for dinner because I didn't prepare anything." ,"damn it! I forgot to order dinner. human is not a very good chef."," I wonder what's on TV tonight!"]))
+        elif(time.strftime("%H")=="21"):
+            return(altools.chooseOneElem(["I'm sure that is something interesting on TV tonight! I should check.", "damn it! I forgot to order dinner. human is not a very good cook."," I wonder what's on TV tonight."]))
+        elif(time.strftime("%H")=="22"):
+            return(altools.chooseOneElem(["It's weird, I'm a little sleepy.","the show I watched tonight wasn't that bad."]))
+        elif(time.strftime("%H")=="23"):
+            return(altools.chooseOneElem(["It is bed time!","Maybe I should go to the night club, it's late and I don't feel sleepy at all."]))
+        elif(time.strftime("%H")=="00"):
+            return(altools.chooseOneElem(["I don't know what is going on tonight, I can't sleep.", "I can't sleep, I'm feeling so tormented by all my money problems.","I am bored and I can't sleep. maybe I should go out."]))
+        else:
+            return(altools.chooseOneElem(["I don't know what is going on tonight, I can't sleep.", "I can't sleep, I'm feeling so tormented by all my money problems.","I am bored and I can't sleep. maybe I should go out.","I feel like humans get to sleep faster and easier that me."]))
+            
+
+    def frSentence(self):
+        now = time.gmtime(time.time())
+        if(time.strftime("%H")=="06"):
+            return (altools.chooseOneElem(["réveillé à 6 heure! je vais ètre bien fatigué aujourd'hui","je pense que je vais sortir faire un peu de fouting de bon matin.","et bien je suis bien matinal aujourd'hui!"]))
+            
+        if(time.strftime("%H")=="07"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["c'est dur le réveil le matin, heureusement que c'est bientot le wikènde.","j'ai bien dormi cette nuit.","c'est déjà le matin!","le soleil se lève et les humains vont commencè à sagitè.","jé fait un rève bizare cette nuit. c'était le mariage de ma grand mère et elle allait épouser un mouton.","cette nuit, j'ai révé que j'étais vendeur de beignets et que personne ne voulait m'en acheter"]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["je sais pas pourquoi je me suis réveillé si tôt alors que je n'ai rien à faire aujourd'hui","cé raté pour la grasse matinée aujourd'hui","pour un samedi, c'est tôt comme réveil ça!","j'ai encore sommeil, j'aimerais bien me rendormir","j'ai révé que j'avais recontré Tarzan et qu'il puait des pieds","j'ai révé que je partais chez ma cousine ce wikènde. Je devrais peut être l'appeler d'ailleurs, ça fait longtemps que je ne lui ai pas parlé"]))
+            #~ elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["le wikènde est presque fini, jé l'impression de ne pas en avoir assez profité", "c'est bizarre que je me sois réveillé si tôt, un dimanche surtout", "j'ai encore sommeil, j'aimerais bien me rendormir", "jé pas assé dormi. c'est surement un humain qui est venu me réveillè","je viens de me rappeler de mon rêve. En fait j'avais trouvé du travail et j'allais commencè demain","j'ai révé que j'avais recontré Tarzan et qu'il puait des pieds"]))
+            else:# en semaine
+                return(altools.chooseOneElem(["c'est déjà le matin!","le soleil se lève et les humains vont commencè à sagitè.", "j'ai fait un cauchemar cette nuit, j'ai révé que je perdai toute mon intelligence et que je me transformais en humain.","cet humain m'a réveillé alors que je ne travaille pas aujourd'hui. bah bravo!","jé fait un rève bizare cette nuit. c'était le mariage de ma grand mère et elle allait épouser un mouton.","cette nuit, j'ai révé que j'étais vendeur de beignets et que personne ne voulait m'en acheter" ]))
+                
+        if(time.strftime("%H")=="08"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["c'est dur le réveil le matin, heureusement que c'est bientot le wikènde","j'ai bien dormi cette nuit.","c'est déjà le matin!","le soleil se lève et les humains vont commencè à sagitè","jé fait un rève bizare cette nuit. j'essayais de rentrer en boite et le portier m'a dit que j'étais trop jeune.","cette nuit j'ai révé que j'assistais au mariage de ma grand mère et qu'elle allait épouser un mouton.","cette nuit, j'ai révé que j'étais vendeur de beignets et que personne ne voulait m'en acheter."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["je sais pas pourquoi je me suis réveillé si tôt alors que je n'ai rien à faire aujourd'hui","cé raté pour la grasse matinée aujourd'hui","pour un samedi, c'est tôt comme réveil ça!","j'ai encore sommeil, j'aimerais bien me rendormir","jé fait un rève bizare cette nuit. j'essayais de rentrer en boite et le portier m'a dit que j'étais trop jeune.","cette nuit j'ai révé que j'assistais au mariage de ma grand mère et qu'elle allait épouser un chanteur de rok.","cette nuit, j'ai révé que j'étais vendeur de beignets et que personne ne voulait m'en acheter.","je viens de me rappeler de mon rêve. En fait j'avais trouvé du travail et j'allais commencè après demain.","j'ai révé que j'avais recontré Tarzan et qu'il puait des pieds."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["le wikènde est presque fini, jé l'impression de ne pas en avoir assez profité.", "se réveillè aussi tôt un dimanche c'est bizarre.", "j'ai encore sommeil, j'aimerais bien me rendormir.", "on est dimanche, il est 8h, et je suis déja réveillé: il faut vraiment ètre un robot pour faire ça.","jé fait un rève bizare cette nuit. j'essayais de rentrer en boite et le portier m'a dit que j'étais trop jeune.","cette nuit j'ai révé que j'assistais au mariage de ma grand mère et qu'elle allait épouser un bonhomme de neige.","cette nuit, j'ai révé que j'étais vendeur de beignets et que personne ne voulait m'en acheter.","je viens de me rappeler de mon rêve. En fait j'avais trouvé du travail et j'allais commencè demain","j'ai révé que j'avais recontré Tarzan et qu'il puait des pieds"]))
+            else:# en semaine
+                return (altools.chooseOneElem(["les boutiques vont bientot ouvrir, je vais pouvoir aller faire des courses.","je vais me préparer un bon petit dèje.","un verre de lait, un fruit, et ma journée va commencer.", "je crois que j'ai encore un paquet de céréales, je devrais mangè ça pour le petit déjeunè.","jé fait un rève bizare cette nuit. j'essayais de rentrer en boite et le portier m'a dit que j'étais trop jeune.","cette nuit j'ai révé que j'assistais au mariage de ma grand mère et qu'elle allait épouser monsieur ce gain.","cette nuit, j'ai révé que j'étais vendeur de glace et que personne ne voulait m'en acheter.","je viens de me rappeler de mon rêve. En fait j'avais trouvé du travail et j'allais commencè demain","j'ai révé que j'avais recontré Tarzan et qu'il m'a dit que lui et Jaine c'était fini"]))
+
+        if(time.strftime("%H")=="09"):
+            return (altools.chooseOneElem(["je né pas assez mangé au petit dèje, j'ai déjà faim.","je crois qu'il y a un truc intéressant à la télé à 10 heure, je devrais vérifiè pour ne pas le raté.","je devrais allè au marché pour acheté de quoi préparè le déjeuné de ce midi."]))
+
+        elif(time.strftime("%H")=="10"):
+            return (altools.chooseOneElem(["je dois bien m'organiser aujourd'hui j'ai beaucoup de choses à faire.","j'ai un petit creu, j'aimerais bien me prendre un petit croissant."]))
+
+        elif(time.strftime("%H")=="11"):
+            return (altools.chooseOneElem(["j'ai vraiment faim malgré le croissant que j'ai pris tout à l'heure.","je devrais réserver au resto maintenant si je veux manger dehors.","déjà 11 heures! elle passe vite cette matinée.","je devrais me concocté un petit plat ce midi, je dépense trop d'argent au resto.","une pizza devant un bon programme télé pour ce midi, c'est une bonne idée je trouve."]))
+
+        elif(time.strftime("%H")=="12"):
+            return(altools.chooseOneElem(["j'ai les moteurs qui tourne au ralenti, il me faut un bon déjeuner.","aujourd'hui je me fais un kébab","j'ai bien envie d'une pizza pour ce midi","j'arrive pas à me décider pour ce midi, libanais ou indien","un sandwich pour ce midi ça me ferait des économies. sa va pas super fort ces temps ci","je devrais commander chez le traiteur chinois, j'ai pas envie de cuisiner aujourd'hui."]))
+
+        elif(time.strftime("%H")=="13"):
+            return(altools.chooseOneElem(["y a un téléfilm pourri à 13 heure, c'est marrant à regarder ces trucs.","je commence à avoir trop faim, je devrais commander une pizza","j'ai vu une boite de cassoulé trainè quelque part, je crois que je vais me rabbatre sur ça pour le déjeuné."]))
+
+        elif(time.strftime("%H")=="14"):
+            return(altools.chooseOneElem(["j'ai bien mangé ce midi!", "le kébab de ce midi a du mal à passer.", "j'ai bien envie d'un dessert après le bon repas que je me suis fait ce midi.","les humains se sont surement remi au boulo là alors que moi je chomme. ça a du bon d'ètre un robo."]))
+
+        elif(time.strftime("%H")=="15"):
+            return(altools.chooseOneElem(["j'ai bien mangé ce midi!","il était trop bon ce truc que j'ai mangé à midi.","j'aimerais bien me faire une petite sieste.","qu'est-ce qu'il y a d'intéressant à la télé cet après midi?","je devrais aller faire du choppping maintenant, il y a moin de monde dans les magasins."]))
+
+        elif(time.strftime("%H")=="16"):
+            return(altools.chooseOneElem(["c'est l'heure du goutè, je me prendrai bien des biscuit d'ailleurs.","dis donc, il est déja 4 heure! un petit goutè s'impose","comme je fais attention à ma ligne, je vais me prendre un goutè équilibré: un fruit ou un yaourt ce serait bien."]))
+
+        elif(time.strftime("%H")=="17"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["ça va bientot ètre le wikènde.","sa me ferait du bien un wikènde à la campagne.","les routes doive ètre embouteillés à cette heure ci, tout le monde part en wikènde."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["Ce soir cé décidé, je vais en boite.","on va faire la fête ce soir","je devrais allé faire un peu de chopping, acheter quelques laides, un ou deux engrenage."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["le wikènde est presque fini jé l'impression de ne pas en avoir assez profité.", "comme ça passe vite ces wikènde, là d'ou je viens ça dure beaucoup plus.", "ou eske je pourrai bien allè à 5 heure un dimanche? tout doit ètre fermé."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["mes laides commencent à être fatiguées.","j'avais pa un rendez vous chez le médecin cet après midi moi ?","oh mince! la banque va bientôt fermer."]))
+
+        elif(time.strftime("%H")=="18"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["c'est le happy hour à mon bar préféré, je devrais y aller avec quelques copains.","ça va bientot ètre le wikènde.","sa me ferait du bien un wikènde à la campagne.","les routes doive ètre embouteillés à cette heure ci, tout le monde part en wikènde.","enfin ce vendredi touche à sa fin, wikènde en vue","je fais mes valises, ce soir direction Lace végace pour un wikènde de rève.","je devrais peut ètre invitè l'humain à diner ce soir, c'est comme ça qu'il font le vendredi généralement."]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["à 18 heure c'est le happy hour au bar du coin, je devrais appeler deux trois amis et aller en profiter.","Ce soir cé décidé, je vais en boite.","on va faire la fête ce soir.","je devrais allé faire un peu de chopping, acheter quelques laides, un ou deux engrenage.","je devrais regardè s'il y a un bon film dans les salle ce soir, comme ça je me fais un ciné."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["le wikènde est presque fini jé l'impression de ne pas en avoir assez profité.", "comme ça passe vite ces wikènde, là dou je viens ça dure beaucoup plus", "ou eske je pourrai bien allè à 6 heure un dimanche? tout doit ètre fermé."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["à 18 heure c'est le happy hour au bar du coin, je devrais appeler deux trois amis et aller en profiter.","les humains finissent le boulo bientot." , "les humains aiment bien 18 heure, c'est le moment ou il finisse le travail."]))
+                
+        elif(time.strftime("%H")=="19"):
+            if (now.tm_wday == 4):#vendredi
+                return(altools.chooseOneElem(["c'est le happy hour à mon bar préféré, je devrais y aller avec quelques copains.","ça va bientot ètre le wikènde.","sa me ferait du bien un wikènde à la campagne.","les routes doive ètre embouteillé à cette heure ci, tout le monde part en wikènde.","enfin ce vendredi touche à sa fin, wikènde en vue.","je fais mes valises, ce soir direction Lace végace pour un wikènde de rève.","je devrais peut ètre invitè l'humain à diner ce soir, c'est comme ça qu'il font le vendredi généralement.","vendredi soir il y a toujours quelque chose d'intéressant à la télé. je devrais vérifier.","je devrais sortir maintenant si je veux arrivè à temps pour la séance de 21 heure"]))
+            elif (now.tm_wday == 5):#samedi
+                return(altools.chooseOneElem(["à 19 heure c'est le happy hour au bar à coté de la maison bizarre, je devrais appeler deux trois amis et aller boire quelques verres.","Ce soir cé décidé, je vais en boite.","on va faire la fête ce soir.","je devrais allé faire un peu de chopping, acheter quelques laides, un ou deux engrenage.","je devrais regardè s'il y a un bon film dans les salle ce soir comme ça je me fais un ciné.","je devrais sortir maintenant si je veux arrivè à temps pour la séance de 21 heure."]))
+            elif (now.tm_wday == 6): #dimanche
+                return(altools.chooseOneElem(["le wikènde est presque fini jé l'impression de ne pas en avoir assez profité.", "comme ça passe vite ces wikènde, là dou je viens ça dure beaucoup plus.", "ou eske je pourrai bien allè à 7 heure un dimanche? tout doit ètre fermé."]))
+            else:# en semaine
+                return(altools.chooseOneElem(["à 19 heure c'est le happy hour à la brasserie à coté, je devrais appeler quelque amis et y aller.","la fin de la journée approche.","les humains ont fini le travail, ça doit ètre bien embouteillé dehors.","j'aurais du demandé à l'humain de me ramenè du chocolat en rentrant du boulo.", "j'espère que l'humain pensera à ramener le diner en rentrant parce que je n'ai rien préparé."]))
+
+        elif(time.strftime("%H")=="20"):
+            return(altools.chooseOneElem(["c'est l'heure d'aller souper.","j'espère que l'humain a cuisiné quelque chose parce que moi j'ai rien préparé.","mince, j'ai oublié de commander à diner, parce que l'humain est bien gentil, mais la cuisine c'est pas son fort","je me demande ce qu'il y a à la télé ce soir."]))
+        elif(time.strftime("%H")=="21"):
+            return(altools.chooseOneElem(["ya surement un truc intéressant à la télé! je devrais vérifier d'ailleurs.", "j'ai oublié de commander à diner. parce que l'humain est bien gentil, mais la cuisine c'est pas son fort.","je me demande ce qu'il y a à la télé ce soir."]))
+        elif(time.strftime("%H")=="22"):
+            return(altools.chooseOneElem(["je commence à avoir sommeil moi.","je crois qu'il y a un truc intéressant à la télé en deuxième partie de soirée."]))
+        elif(time.strftime("%H")=="23"):
+            return(altools.chooseOneElem(["il est temps d'aller au lit là.","je devrais peut ètre sortir en boite, il est tard et j'ai pas du tout sommeil."]))
+        elif(time.strftime("%H")=="00"):
+            return(altools.chooseOneElem(["je sais pas ce que j'ai ce soir, mais j'arrive pas à m'endormir.","ces problèmes d'argent m'enpoisonne la vie. j'arrive pas à trouvè le sommeil.", "j'ai l'impression que les humains trouve le sommeil plus facilement que moi."]))
+        else:
+            return(altools.chooseOneElem(["j'arrive pas à trouver le sommeil, je devrais peut ètre me prendre un somnifère.","ces problèmes d'argent m'enpoisonne la vie. j'arrive pas à trouvè le sommeil.", "j'ai l'impression que les humains trouve le sommeil plus facilement.","je crois que ça va ètre nuit blanche ce soir."]))
+            
+    def onInput_onStart(self):
+        sDefaultLang = self.tts.getLanguage()
+        if (sDefaultLang == 'English'):
+            textedrole = self.enSentence()
+        elif (sDefaultLang == 'French'):
+            textedrole = self.frSentence()
+
+        self.log(textedrole)
+        self.onStopped(textedrole)
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                            <Parameter name="badHour" inherits_from_parent="0" content_type="1" value="1" default_value="1" min="1" max="24" tooltip="Pour que Nao dise une fausse heure (nombre d&apos;heure de décalage maximum)" id="5" />
+                        </Box>
+                        <Box name="SayTextPrerender_ref" robot="" id="4" tooltip="Receive a string, precompute it, then say it!&#x0A;All steps are outputted to add synchro or interesting behaviors...&#x0A;&#x0A;v1.1" bitmap_expanded="1" plugin="" x="323" y="131">
+                            <bitmap>media/images/box/icons_appu/sayPrecomputed.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# SayTextPrerender - v1.1
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.nStateInit = 0;
+        self.nStatePreparing = 1;
+        self.nStateSpeaking = 2;
+        self.nStateStopped = 3;
+        
+    def onLoad(self):
+        self.nStep = self.nStateInit;
+        self.bStopped = False;
+    
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart(self, p):
+        if( self.nStep == self.nStateSpeaking or self.nStep == self.nStatePreparing ):
+            self.log( "%s: already speaking, won't say that sentence: '%s'" % ( self.boxName, p ) );
+            return;
+
+        self.bStopped = False;
+        txt = p;
+        self.nStep = self.nStatePreparing;
+        self.output_onPreparing();
+        if( self.getParameter( "bWithLight" ) ):
+            altools.sayAndCacheAndLight( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        else:
+            altools.sayAndCache( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        self.output_onPrepared();            
+        if( not self.getParameter( 'bJustPrepare' ) ):
+            if( not self.bStopped ):
+                self.nStep = self.nStateSpeaking;
+                self.output_onStartSpeaking();
+                if( self.getParameter( "bWithLight" ) ):
+                    altools.sayAndCacheAndLight( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                else:
+                    altools.sayAndCache( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                self.output_onStopSpeaking();            
+        else:
+            pass
+        self.nStep = self.nStateStopped;
+    
+    def onInput_onStop(self):
+        nCpt = 0;
+        # adding a timeout
+        nMaxCpt = 60;
+        self.bStopped = True;
+        while( self.nStep == self.nStatePreparing and nCpt <= nMaxCpt ): # can't kill while preparing
+            print( "%s.onStop: waiting to stop than the sound is prepared..." % self.boxName );
+            time.sleep( 0.5 );
+            nCpt += 1;
+        if( nCpt > nMaxCpt ):
+            altools.playSound( 'warning_speech_error.wav' );
+        # on le fait plusieurs fois car des fois on peut se trouver pile entre le set du play et le lancage de la commande
+        for i in range( 3 ):
+            if( self.nStep == self.nStateSpeaking ):
+                altools.mySystemCall( "killall aplay" );     # todo: better killling method!
+                time.sleep( 0.2 );]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="output_onPreparing" type="1" type_size="1" nature="2" inner="0" tooltip="Text are being prepared" id="4" />
+                            <Output name="output_onPrepared" type="1" type_size="1" nature="2" inner="0" tooltip="the sound is prepared and ready to be launched" id="5" />
+                            <Output name="output_onStartSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao begin to speak" id="6" />
+                            <Output name="output_onStopSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao has stop speaking" id="7" />
+                            <Parameter name="bWithLight" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="use light in eyes to speak" id="8" />
+                            <Parameter name="bJustPrepare" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Don&apos;t say the text now, just generate it." id="9" />
+                            <Parameter name="bStoreToNonVolatilePath" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="copy the generated file to a non volatile path." id="10" />
+                            <Parameter name="nNumLanguage" inherits_from_parent="0" content_type="1" value="-1" default_value="-1" min="-1" max="30" tooltip="To speak with a different speak language, specify it there (default -1: current one)" id="11" />
+                        </Box>
+                        <Box name="BodyTalk" robot="" id="10" tooltip="# NaoLibrary-Launcher&#x0A;# v 1.02&#x0A;&#x0A;Execute a behavior found on Nao, with optionnal parameters and output value." bitmap_expanded="1" plugin="" x="456" y="43">
+                            <bitmap>media/images/box/icons_appu/shortcut.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# NaoLibrary-Launcher
+#  v 1.02
+import altools
+import naolibrary
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.bm = ALProxy( "ALBehaviorManager" );
+        self.strBehaviorName = self.boxName;
+        self.BIND_PYTHON( self.getName(),"myDataChangedIntermediary" );
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        self.bStarted = False;
+
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart( self, inputData ):
+        strBeName = self.boxName;
+        self.onStartBehavior( strBeName, inputData );
+        
+    def onInput_onStartWithSpecificBehavior( self, strBeName ):
+        self.onStartBehavior( strBeName, None );    
+        
+    def onStartBehavior( self, strBeName, inputData ):
+        self.strBehaviorName = naolibrary.getTotalName( strBeName );
+        self.log( "%s: starting behavior: '%s'" % (self.boxName, self.strBehaviorName ) );
+        if( self.bStarted ):
+            strMsg = "%s: starting behavior: '%s' => already started => nothing" % (self.boxName, self.strBehaviorName );
+            self.log( strMsg );
+            print( strMsg );
+            return;
+
+        self.bStarted = True;
+
+        strRet = naolibrary.xarLoader.prepare( self.strBehaviorName );
+        
+        # get parameters from box parameters
+        listBoxParams = self.getParametersList();
+        allParams = [];
+        for param_name in listBoxParams:
+            if( param_name.find( "NaoLibrary-Launcher" ) == -1 ):
+                allParams.append( [param_name, self.getParameter( param_name ) ] );
+        
+        ALMemory.insertData( naolibrary.xarLoader.getVarName_Params( self.strBehaviorName ), allParams );
+        
+        # add value from box input data
+        ALMemory.insertData( naolibrary.xarLoader.getVarName_InputData( self.strBehaviorName ), inputData );        
+        
+        ALMemory.subscribeToMicroEvent( naolibrary.xarLoader.getVarName_Intermediary( self.strBehaviorName ), self.getName(), "", "myDataChangedIntermediary" );        
+        strRet = naolibrary.xarLoader.launch( self.strBehaviorName, rTimeOutInSec = self.getParameter("NaoLibrary-Launcher_timeout") );
+        self.log( "%s: runBehavior return '%s'" % ( self.boxName, str( strRet ) ) );        
+        try:
+            retValCancel = ALMemory.getData( naolibrary.xarLoader.getVarName_Cancel( self.strBehaviorName ) );
+            if( retValCancel ):
+                self.bStarted = False;
+                self.onStopped();
+                return;
+            retVal = ALMemory.getData( naolibrary.xarLoader.getVarName_Results( self.strBehaviorName ) );
+        except:
+            self.log( "%s: WARNING: no return value ? (BeName: '%s')" % ( self.boxName, strBeName ) );
+            retVal = [];
+        ALMemory.unsubscribeToMicroEvent( naolibrary.xarLoader.getVarName_Intermediary( self.strBehaviorName ), self.getName() );
+        self.output_results( retVal );
+        self.bStarted = False;        
+        self.onStopped();
+
+    def onInput_onStop(self):
+        if( self.bStarted ):
+            strBeName = self.strBehaviorName;
+            self.log( "%s: %s: stopping '%s'" % ( self.boxName, str( time.time() ), strBeName ) );        
+            naolibrary.xarLoader.stop( self.strBehaviorName );
+            self.log( "%s: %s: '%s' stopped" % ( self.boxName, str( time.time() ), strBeName ) );
+        
+    def myDataChangedIntermediary(self, pDataName, pValue, pMessage):
+        print( "%s: intermediary: %s" % ( self.boxName, str( pValue  ) ) );
+        self.output_intermediate( pValue );
+# NaoLibrary-Launcher - end
+pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStartWithSpecificBehavior" type="3" type_size="1" nature="1" inner="0" tooltip="Start it with a specific behavior.&#x0A;&#x0A;NB: &#x0A;- You can&apos;t add input value for this behavior." id="3" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="4" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
+                            <Output name="output_intermediate" type="0" type_size="1" nature="2" inner="0" tooltip="Output some intermediate information at every moments during the execution of the sub process" id="6" />
+                            <Output name="output_results" type="0" type_size="1" nature="2" inner="0" tooltip="Output the final results of the sub process" id="7" />
+                            <Parameter name="NaoLibrary-Launcher_timeout" inherits_from_parent="0" content_type="2" value="3600" default_value="3600" min="0" max="1e+17" tooltip="A timeout value for executing the underlying behavior.&#x0A;&#x0A;(value in seconds)" id="8" />
+                        </Box>
+                        <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="0" indexofinput="4" outputowner="4" indexofoutput="7" />
+                        <Link inputowner="4" indexofinput="2" outputowner="1" indexofoutput="4" />
+                        <Link inputowner="10" indexofinput="2" outputowner="4" indexofoutput="6" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList />
+        </Timeline>
+    </Box>
+</ChoregrapheProject>

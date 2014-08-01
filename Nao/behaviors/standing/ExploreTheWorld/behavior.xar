@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="2">
+    <Box name="root" robot="" id="-1" tooltip="Root box of Choregraphe&apos;s project. Highest level possible." bitmap_expanded="1" plugin="" x="0" y="0">
+        <bitmap>media/images/box/root.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+            <watches />
+            <BehaviorLayer name="behavior_layer1" mute="0">
+                <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                    <Diagram scale="90">
+                        <Box name="TactilTouch" robot="" id="2" tooltip="Detect touch on head tactil sensor" bitmap_expanded="1" plugin="" x="482" y="31">
+                            <bitmap>media/images/box/movement/move_head.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        self.gotoAndStop(1)
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is usually a good idea to call onUnload of this box in a onStop method, as the code written in onUnload is used to finish the working of the box as well
+        self.onStopped() #~ activate output of the box        
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Input name="FrontTactilTouched" type="0" type_size="1" nature="4" stm_value_name="FrontTactilTouched" inner="1" tooltip="Connected to ALMemory. Will be stimulated every time the value subscribed to changes, respecting the refresh period." id="4" />
+                            <Input name="MiddleTactilTouched" type="0" type_size="1" nature="4" stm_value_name="MiddleTactilTouched" inner="1" tooltip="Connected to ALMemory. Will be stimulated every time the value subscribed to changes, respecting the refresh period." id="5" />
+                            <Input name="RearTactilTouched" type="0" type_size="1" nature="4" stm_value_name="RearTactilTouched" inner="1" tooltip="Connected to ALMemory. Will be stimulated every time the value subscribed to changes, respecting the refresh period." id="6" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="qsdqsd" id="7" />
+                            <Output name="output_TapFront" type="1" type_size="1" nature="2" inner="0" tooltip="A tap has just occured on front" id="8" />
+                            <Output name="output_TapMiddle" type="1" type_size="1" nature="2" inner="0" tooltip="A tap has just occured on middle" id="9" />
+                            <Output name="output_TapRear" type="1" type_size="1" nature="2" inner="0" tooltip="A tap has just occured on rear" id="10" />
+                            <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+                                <watches />
+                                <BehaviorLayer name="behavior_layer1" mute="0">
+                                    <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                                        <Diagram scale="-1">
+                                            <Box name="if &gt; 0" robot="" id="1" tooltip="Transmit only if value is &gt; 0." bitmap_expanded="1" plugin="" x="256" y="119">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self, p):
+        if(p > 0):
+            self.onStopped() #~ activate output of the box
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is usually a good idea to call onUnload of this box in a onStop method, as the code written in onUnload is used to finish the working of the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
+                                            <Box name="if &gt; 0" robot="" id="2" tooltip="Transmit only if value is &gt; 0." bitmap_expanded="1" plugin="" x="260" y="17">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self, p):
+        if(p > 0):
+            self.onStopped() #~ activate output of the box
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is usually a good idea to call onUnload of this box in a onStop method, as the code written in onUnload is used to finish the working of the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
+                                            <Box name="if &gt; 0" robot="" id="3" tooltip="Transmit only if value is &gt; 0." bitmap_expanded="1" plugin="" x="261" y="223">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self, p):
+        if(p > 0):
+            self.onStopped() #~ activate output of the box
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is usually a good idea to call onUnload of this box in a onStop method, as the code written in onUnload is used to finish the working of the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                            </Box>
+                                            <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="4" />
+                                            <Link inputowner="0" indexofinput="8" outputowner="2" indexofoutput="4" />
+                                            <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="5" />
+                                            <Link inputowner="0" indexofinput="9" outputowner="1" indexofoutput="4" />
+                                            <Link inputowner="3" indexofinput="2" outputowner="0" indexofoutput="6" />
+                                            <Link inputowner="0" indexofinput="10" outputowner="3" indexofoutput="4" />
+                                        </Diagram>
+                                    </BehaviorKeyframe>
+                                </BehaviorLayer>
+                                <ActuatorList />
+                            </Timeline>
+                        </Box>
+                        <Box name="Enter name here" robot="" id="5" tooltip="Enter tooltip here" bitmap_expanded="1" plugin="localizationbox_plugin" x="60" y="108">
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+		self.tts = ALProxy("ALTextToSpeech")
+
+	def onInput_onStart(self):
+		sEnglish = "Let's go visit!"
+		sFrench = "Je vais aller visiter un coup!"
+		sSpanish = ""
+		sItalian = ""
+		sGerman = ""
+		sChinese = ""
+		sPolish = ""
+		sKorean = ""
+		sDefaultLang = self.tts.getLanguage()
+		self.onStopped(eval("s"+sDefaultLang))]]>
+</content>
+                            </script>
+                            <pluginContent>
+                                <english>Let&apos;s go visit!</english>
+                                <french>Je vais aller visiter un coup!</french>
+                                <spanish></spanish>
+                                <italian></italian>
+                                <german></german>
+                                <chinese></chinese>
+                                <polish></polish>
+                                <korean></korean>
+                                <language>1</language>
+                            </pluginContent>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                        </Box>
+                        <Box name="SayTextPrerender_ref" robot="" id="6" tooltip="Receive a string, precompute it, then say it!&#x0A;All steps are outputted to add synchro or interesting behaviors...&#x0A;&#x0A;v1.1" bitmap_expanded="1" plugin="" x="339" y="105">
+                            <bitmap>media/images/box/icons_appu/sayPrecomputed.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# SayTextPrerender - v1.1
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.nStateInit = 0;
+        self.nStatePreparing = 1;
+        self.nStateSpeaking = 2;
+        self.nStateStopped = 3;
+        
+    def onLoad(self):
+        self.nStep = self.nStateInit;
+        self.bStopped = False;
+    
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart(self, p):
+        if( self.nStep == self.nStateSpeaking or self.nStep == self.nStatePreparing ):
+            self.log( "%s: already speaking, won't say that sentence: '%s'" % ( self.boxName, p ) );
+            return;
+
+        self.bStopped = False;
+        txt = p;
+        self.nStep = self.nStatePreparing;
+        self.output_onPreparing();
+        if( self.getParameter( "bWithLight" ) ):
+            altools.sayAndCacheAndLight( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        else:
+            altools.sayAndCache( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        self.output_onPrepared();            
+        if( not self.getParameter( 'bJustPrepare' ) ):
+            if( not self.bStopped ):
+                self.nStep = self.nStateSpeaking;
+                self.output_onStartSpeaking();
+                if( self.getParameter( "bWithLight" ) ):
+                    altools.sayAndCacheAndLight( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                else:
+                    altools.sayAndCache( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                self.output_onStopSpeaking();            
+        else:
+            pass
+        self.nStep = self.nStateStopped;
+    
+    def onInput_onStop(self):
+        nCpt = 0;
+        # adding a timeout
+        nMaxCpt = 60;
+        self.bStopped = True;
+        while( self.nStep == self.nStatePreparing and nCpt <= nMaxCpt ): # can't kill while preparing
+            print( "%s.onStop: waiting to stop than the sound is prepared..." % self.boxName );
+            time.sleep( 0.5 );
+            nCpt += 1;
+        if( nCpt > nMaxCpt ):
+            altools.playSound( 'warning_speech_error.wav' );
+        # on le fait plusieurs fois car des fois on peut se trouver pile entre le set du play et le lancage de la commande
+        for i in range( 3 ):
+            if( self.nStep == self.nStateSpeaking ):
+                altools.mySystemCall( "killall aplay" );     # todo: better killling method!
+                time.sleep( 0.2 );]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="output_onPreparing" type="1" type_size="1" nature="2" inner="0" tooltip="Text are being prepared" id="4" />
+                            <Output name="output_onPrepared" type="1" type_size="1" nature="2" inner="0" tooltip="the sound is prepared and ready to be launched" id="5" />
+                            <Output name="output_onStartSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao begin to speak" id="6" />
+                            <Output name="output_onStopSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao has stop speaking" id="7" />
+                            <Parameter name="bWithLight" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="use light in eyes to speak" id="8" />
+                            <Parameter name="bJustPrepare" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Don&apos;t say the text now, just generate it." id="9" />
+                            <Parameter name="bStoreToNonVolatilePath" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="copy the generated file to a non volatile path." id="10" />
+                            <Parameter name="nNumLanguage" inherits_from_parent="0" content_type="1" value="-1" default_value="-1" min="-1" max="30" tooltip="To speak with a different speak language, specify it there (default -1: current one)" id="11" />
+                        </Box>
+                        <Box name="Explore" robot="" id="3" tooltip="# NaoLibrary-Launcher&#x0A;# v 1.02&#x0A;&#x0A;Execute a behavior found on Nao, with optionnal parameters and output value." bitmap_expanded="1" plugin="" x="488" y="135">
+                            <bitmap>media/images/box/icons_appu/shortcut.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# NaoLibrary-Launcher
+#  v 1.03
+import altools
+import naolibrary
+import time
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.bm = ALProxy( "ALBehaviorManager" );
+        self.strBehaviorName = self.boxName;
+        self.BIND_PYTHON( self.getName(),"myDataChangedIntermediary" );
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        self.bStarted = False;
+
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart( self, inputData ):
+        strBeName = self.boxName;
+        self.onStartBehavior( strBeName, inputData );
+        
+    def onInput_onStartWithSpecificBehavior( self, strBeName ):
+        self.onStartBehavior( strBeName, None );    
+        
+    def onStartBehavior( self, strBeName, inputData ):
+        self.strBehaviorName = naolibrary.getTotalName( strBeName );
+        self.log( "%s: starting behavior: '%s'" % (self.boxName, self.strBehaviorName ) );
+        # some box can make a little time before finishing, so we're wait a little (2s max)
+        for i in range( 5 ):
+            if( self.bStarted ):
+                time.sleep( 0.4 );
+        
+        if( self.bStarted ):
+            strMsg = "%s: starting behavior: '%s' => already started => nothing" % (self.boxName, self.strBehaviorName );
+            self.log( strMsg );
+            print( strMsg );
+            return;
+
+        self.bStarted = True;
+
+        strRet = naolibrary.xarLoader.prepare( self.strBehaviorName );
+        
+        # get parameters from box parameters
+        listBoxParams = self.getParametersList();
+        allParams = [];
+        for param_name in listBoxParams:
+            if( param_name.find( "NaoLibrary-Launcher" ) == -1 ):
+                allParams.append( [param_name, self.getParameter( param_name ) ] );
+        
+        ALMemory.insertData( naolibrary.xarLoader.getVarName_Params( self.strBehaviorName ), allParams );
+        
+        # add value from box input data
+        ALMemory.insertData( naolibrary.xarLoader.getVarName_InputData( self.strBehaviorName ), inputData );        
+        
+        ALMemory.subscribeToMicroEvent( naolibrary.xarLoader.getVarName_Intermediary( self.strBehaviorName ), self.getName(), "", "myDataChangedIntermediary" );        
+        strRet = naolibrary.xarLoader.launch( self.strBehaviorName, rTimeOutInSec = self.getParameter("NaoLibrary-Launcher_timeout") );
+        self.log( "%s: runBehavior return '%s'" % ( self.boxName, str( strRet ) ) );        
+        try:
+            retValCancel = ALMemory.getData( naolibrary.xarLoader.getVarName_Cancel( self.strBehaviorName ) );
+            if( retValCancel ):
+                self.bStarted = False;
+                self.onStopped();
+                return;
+            retVal = ALMemory.getData( naolibrary.xarLoader.getVarName_Results( self.strBehaviorName ) );
+        except:
+            self.log( "%s: WARNING: no return value ? (BeName: '%s')" % ( self.boxName, strBeName ) );
+            retVal = [];
+        ALMemory.unsubscribeToMicroEvent( naolibrary.xarLoader.getVarName_Intermediary( self.strBehaviorName ), self.getName() );
+        self.output_results( retVal );
+        self.bStarted = False;        
+        self.onStopped();
+
+    def onInput_onStop(self):
+        if( self.bStarted ):
+            strBeName = self.strBehaviorName;
+            self.log( "%s: %s: stopping '%s'" % ( self.boxName, str( time.time() ), strBeName ) );        
+            naolibrary.xarLoader.stop( self.strBehaviorName );
+            self.log( "%s: %s: '%s' stopped" % ( self.boxName, str( time.time() ), strBeName ) );
+        
+    def myDataChangedIntermediary(self, pDataName, pValue, pMessage):
+        print( "%s: intermediary: %s" % ( self.boxName, str( pValue  ) ) );
+        self.output_intermediate( pValue );
+# NaoLibrary-Launcher - end
+pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStartWithSpecificBehavior" type="3" type_size="1" nature="1" inner="0" tooltip="Start it with a specific behavior.&#x0A;&#x0A;NB: &#x0A;- You can&apos;t add input value for this behavior." id="3" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="4" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
+                            <Output name="output_intermediate" type="0" type_size="1" nature="2" inner="0" tooltip="Output some intermediate information at every moments during the execution of the sub process" id="6" />
+                            <Output name="output_results" type="0" type_size="1" nature="2" inner="0" tooltip="Output the final results of the sub process" id="7" />
+                            <Parameter name="NaoLibrary-Launcher_timeout" inherits_from_parent="0" content_type="2" value="300" default_value="3600" min="0" max="1e+17" tooltip="A timeout value for executing the underlying behavior.&#x0A;&#x0A;(value in seconds)" id="8" />
+                            <Parameter name="rChanceOfLookAt" inherits_from_parent="0" content_type="1" value="20" default_value="5" min="0" max="1000" tooltip="Percentage of chance of a decision to look at an object.&#x0A;&#x0A;because we can&apos;t put something like 0.005, on va le mettre en pour mille" id="9" />
+                            <Parameter name="rChanceToExit" inherits_from_parent="0" content_type="2" value="0.0001" default_value="0.2" min="0" max="1" tooltip="" id="10" />
+                            <Parameter name="rTimeOut" inherits_from_parent="0" content_type="2" value="240" default_value="600" min="0" max="1e+14" tooltip="time out in seconds" id="11" />
+                            <Parameter name="bOuputMapToPng" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="activate the output of a map in png on the robot..." id="12" />
+                            <Parameter name="bEnableSound" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="EnableDebugSound" id="13" />
+                            <Parameter name="nObstaclesThreshold" inherits_from_parent="0" content_type="1" value="32" default_value="32" min="0" max="256" tooltip="Change the Obstacles Threshold (vision)" id="14" />
+                        </Box>
+                        <Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="10" />
+                        <Link inputowner="6" indexofinput="2" outputowner="5" indexofoutput="4" />
+                        <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="0" indexofinput="4" outputowner="3" indexofoutput="5" />
+                        <Link inputowner="0" indexofinput="4" outputowner="3" indexofoutput="7" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="7" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList />
+        </Timeline>
+    </Box>
+</ChoregrapheProject>

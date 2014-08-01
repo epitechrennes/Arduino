@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="2">
+    <Box name="root" robot="" id="-1" tooltip="Root box of Choregraphe&apos;s project. Highest level possible." bitmap_expanded="1" plugin="" x="0" y="0">
+        <bitmap>media/images/box/root.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+            <watches />
+            <BehaviorLayer name="behavior_layer1" mute="0">
+                <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                    <Diagram scale="-1">
+                        <Box name="Enter name here" robot="" id="1" tooltip="Enter tooltip here" bitmap_expanded="1" plugin="localizationbox_plugin" x="157" y="31">
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+		self.tts = ALProxy("ALTextToSpeech")
+
+	def onInput_onStart(self):
+		sEnglish = "Thanks for plugging me!"
+		sFrench = "Merci de m'avoir brancher!"
+		sSpanish = ""
+		sItalian = ""
+		sGerman = ""
+		sChinese = ""
+		sPolish = ""
+		sKorean = ""
+		sDefaultLang = self.tts.getLanguage()
+		self.onStopped(eval("s"+sDefaultLang))]]>
+</content>
+                            </script>
+                            <pluginContent>
+                                <english>Thanks for plugging me!</english>
+                                <french>Merci de m&apos;avoir brancher!</french>
+                                <spanish></spanish>
+                                <italian></italian>
+                                <german></german>
+                                <chinese></chinese>
+                                <polish></polish>
+                                <korean></korean>
+                                <language>0</language>
+                            </pluginContent>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                        </Box>
+                        <Box name="SayTextPrerender_ref" robot="" id="4" tooltip="Receive a string, precompute it, then say it!&#x0A;All steps are outputted to add synchro or interesting behaviors...&#x0A;&#x0A;v1.1" bitmap_expanded="1" plugin="" x="422" y="9">
+                            <bitmap>media/images/box/icons_appu/sayPrecomputed.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# SayTextPrerender - v1.1
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.nStateInit = 0;
+        self.nStatePreparing = 1;
+        self.nStateSpeaking = 2;
+        self.nStateStopped = 3;
+        
+    def onLoad(self):
+        self.nStep = self.nStateInit;
+        self.bStopped = False;
+    
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart(self, p):
+        if( self.nStep == self.nStateSpeaking or self.nStep == self.nStatePreparing ):
+            self.log( "%s: already speaking, won't say that sentence: '%s'" % ( self.boxName, p ) );
+            return;
+
+        self.bStopped = False;
+        txt = p;
+        self.nStep = self.nStatePreparing;
+        self.output_onPreparing();
+        if( self.getParameter( "bWithLight" ) ):
+            altools.sayAndCacheAndLight( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        else:
+            altools.sayAndCache( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        self.output_onPrepared();            
+        if( not self.getParameter( 'bJustPrepare' ) ):
+            if( not self.bStopped ):
+                self.nStep = self.nStateSpeaking;
+                self.output_onStartSpeaking();
+                if( self.getParameter( "bWithLight" ) ):
+                    altools.sayAndCacheAndLight( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                else:
+                    altools.sayAndCache( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                self.output_onStopSpeaking();            
+        else:
+            pass
+        self.nStep = self.nStateStopped;
+    
+    def onInput_onStop(self):
+        nCpt = 0;
+        # adding a timeout
+        nMaxCpt = 60;
+        self.bStopped = True;
+        while( self.nStep == self.nStatePreparing and nCpt <= nMaxCpt ): # can't kill while preparing
+            print( "%s.onStop: waiting to stop than the sound is prepared..." % self.boxName );
+            time.sleep( 0.5 );
+            nCpt += 1;
+        if( nCpt > nMaxCpt ):
+            altools.playSound( 'warning_speech_error.wav' );
+        # on le fait plusieurs fois car des fois on peut se trouver pile entre le set du play et le lancage de la commande
+        for i in range( 3 ):
+            if( self.nStep == self.nStateSpeaking ):
+                altools.mySystemCall( "killall aplay" );     # todo: better killling method!
+                time.sleep( 0.2 );]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="output_onPreparing" type="1" type_size="1" nature="2" inner="0" tooltip="Text are being prepared" id="4" />
+                            <Output name="output_onPrepared" type="1" type_size="1" nature="2" inner="0" tooltip="the sound is prepared and ready to be launched" id="5" />
+                            <Output name="output_onStartSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao begin to speak" id="6" />
+                            <Output name="output_onStopSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao has stop speaking" id="7" />
+                            <Parameter name="bWithLight" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="use light in eyes to speak" id="8" />
+                            <Parameter name="bJustPrepare" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Don&apos;t say the text now, just generate it." id="9" />
+                            <Parameter name="bStoreToNonVolatilePath" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="copy the generated file to a non volatile path." id="10" />
+                            <Parameter name="nNumLanguage" inherits_from_parent="0" content_type="1" value="-1" default_value="-1" min="-1" max="30" tooltip="To speak with a different speak language, specify it there (default -1: current one)" id="11" />
+                        </Box>
+                        <Link inputowner="4" indexofinput="2" outputowner="1" indexofoutput="4" />
+                        <Link inputowner="0" indexofinput="4" outputowner="4" indexofoutput="7" />
+                        <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList />
+        </Timeline>
+    </Box>
+</ChoregrapheProject>

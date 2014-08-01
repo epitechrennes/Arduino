@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr","en"]
+	</lang>
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      env.music_detected and 60 > now - env.music_detected_last_false and now - env.music_detected_last_false > 2
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		system
+	</type>
+	<tag>
+		physical
+	</tag>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr","en"]
+	</lang>
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.is_charging and 20 > now - nao.is_charging_last_false and now - self.last_start > 60*1
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

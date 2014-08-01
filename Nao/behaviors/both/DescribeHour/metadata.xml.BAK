@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		user
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<lang>
+		["fr", "en"] 	# handled languages by this behaviors (default: nothing => all); could be: "all", or a list ["fr", "en"], or empty
+	</lang>	
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr","en"]
+	</lang>
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      now - self.last_start > 60*60*4 and now - nao.any_behaviors_last_start > 60
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

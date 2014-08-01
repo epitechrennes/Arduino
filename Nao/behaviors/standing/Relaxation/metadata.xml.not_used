@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		[]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and 74 > nao.body_temperature and now - self.last_stop > 20 and now - nao.any_behaviors_last_start > 40
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

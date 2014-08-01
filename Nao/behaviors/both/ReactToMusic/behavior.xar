@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="2">
+    <Box name="root" robot="" id="-1" tooltip="Root box of Choregraphe&apos;s project. Highest level possible." bitmap_expanded="1" plugin="" x="0" y="0">
+        <bitmap>media/images/box/root.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+            <watches />
+            <BehaviorLayer name="behavior_layer1" mute="0">
+                <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                    <Diagram scale="101">
+                        <Box name="SoundToTheMax" robot="" id="2" tooltip="Adjust sound volume to ambiant sound" bitmap_expanded="1" plugin="" x="274" y="37">
+                            <bitmap>media/images/box/icons_appu/mental.png</bitmap>
+                            <bitmap>media/images/box/interaction/play_sound.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import altools
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        altools.setMasterVolume( 95 );
+        self.onStopped() #~ activate output of the box
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                        </Box>
+                        <Box name="Dance" robot="" id="3" tooltip="Dance, moving my body" bitmap_expanded="1" plugin="" x="260" y="154">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                            <Output name="output_speaking_begin" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
+                            <Output name="output_speaking_end" type="1" type_size="1" nature="2" inner="0" tooltip="" id="6" />
+                            <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+                                <watches />
+                                <BehaviorLayer name="behavior_layer1" mute="0">
+                                    <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                                        <Diagram scale="82">
+                                            <Box name="List 5 Poses sit avec moins de hip roll" robot="" id="7" tooltip="This Box just transmits the text you entered when its Input is stimulated." bitmap_expanded="1" plugin="textedit_plugin" x="543" y="148">
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+
+	def onInput_onStart(self):
+		self.onStopped("[{\n    'HeadPitch': -0.34058997035,\n    'HeadYaw': -0.335987985134,\n    'LAnklePitch': 0.742414057255,\n    'LAnkleRoll': 0.130431964993,\n    'LElbowRoll': -1.0031940937,\n    'LElbowYaw': -2.07707810402,\n    'LHand': 0.23202572763,\n    'LHipPitch': -1.56924009323,\n    'LHipRoll': -0.053806045055,\n    'LHipYawPitch': -0.450954049826,\n    'LKneePitch': 1.53089010715,\n    'LShoulderPitch': 0.978650093079,\n    'LShoulderRoll': 0.779230058193,\n    'LWristYaw': -0.625913977623,\n    'RAnklePitch': 0.806926012039,\n    'RAnkleRoll': -0.00302603840828,\n    'RElbowRoll': 0.869819998741,\n    'RElbowYaw': 0.090464040637,\n    'RHand': 0.307661861181,\n    'RHipPitch': -1.54324603081,\n    'RHipRoll': 0.05462798357,\n    'RKneePitch': 0.834537982941,\n    'RShoulderPitch': -1.39743208885,\n    'RShoulderRoll': -0.567621946335,\n    'RWristYaw': 0.931096076965,\n},\n{\n    'HeadPitch': -0.382007956505,\n    'HeadYaw': -0.305307984352,\n    'LAnklePitch': 0.788434028625,\n    'LAnkleRoll': 0.0276539623737,\n    'LElbowRoll': -1.31919813156,\n    'LElbowYaw': -1.68130600452,\n    'LHand': 0.231662094593,\n    'LHipPitch': -1.57230806351,\n    'LHipRoll': -0.079884030819,\n    'LHipYawPitch': -0.496974050999,\n    'LKneePitch': 1.08756411076,\n    'LShoulderPitch': -0.756303966045,\n    'LShoulderRoll': 0.518450021744,\n    'LWristYaw': -0.653525948524,\n    'RAnklePitch': 0.783915996552,\n    'RAnkleRoll': 0.00771196186543,\n    'RElbowRoll': 1.50182795525,\n    'RElbowYaw': 1.00166010857,\n    'RHand': 0.307661861181,\n    'RHipPitch': -1.56472206116,\n    'RHipRoll': -0.047164042592,\n    'RKneePitch': 0.88822799921,\n    'RShoulderPitch': 0.283831954002,\n    'RShoulderRoll': -0.335987985134,\n    'RWristYaw': 0.921892046928,\n},\n{\n    'HeadPitch': -0.334453970194,\n    'HeadYaw': 0.276078045368,\n    'LAnklePitch': 0.783832073212,\n    'LAnkleRoll': -0.013764038682,\n    'LElbowRoll': -0.901950061321,\n    'LElbowYaw': -0.36053198576,\n    'LHand': 0.231662094593,\n    'LHipPitch': -1.44498610497,\n    'LHipRoll': 0.0474799638987,\n    'LHipYawPitch': -0.420274049044,\n    'LKneePitch': 0.397264063358,\n    'LShoulderPitch': -1.26405799389,\n    'LShoulderRoll': 0.987854063511,\n    'LWristYaw': -0.665797948837,\n    'RAnklePitch': 0.791585981846,\n    'RAnkleRoll': 0.0491299629211,\n    'RElbowRoll': 0.675001978874,\n    'RElbowYaw': 0.59975206852,\n    'RHand': 0.307298213243,\n    'RHipPitch': -1.61227595806,\n    'RHipRoll': -0.056542041302,\n    'RKneePitch': 0.802323997021,\n    'RShoulderPitch': -1.29465413094,\n    'RShoulderRoll': -0.714885950089,\n    'RWristYaw': 1.00779604912,\n},\n{\n    'HeadPitch': 0.302156031132,\n    'HeadYaw': 0.268408060074,\n    'LAnklePitch': 0.786900043488,\n    'LAnkleRoll': -0.0659200400114,\n    'LElbowRoll': -1.52782201767,\n    'LElbowYaw': -0.309909969568,\n    'LHand': 0.231662094593,\n    'LHipPitch': -1.58151209354,\n    'LHipRoll': -0.146816060543,\n    'LHipYawPitch': -0.429478049278,\n    'LKneePitch': 0.708666086197,\n    'LShoulderPitch': 0.0919980406761,\n    'LShoulderRoll': 0.829852044582,\n    'LWristYaw': -0.668865978718,\n    'RAnklePitch': 0.782382011414,\n    'RAnkleRoll': 0.0368579626083,\n    'RElbowRoll': 1.54324603081,\n    'RElbowYaw': 1.54009413719,\n    'RHand': 0.307298213243,\n    'RHipPitch': -1.50949800014,\n    'RHipRoll': -0.334180040359,\n    'RKneePitch': 0.633583962917,\n    'RShoulderPitch': -0.773094058037,\n    'RShoulderRoll': -0.737895965576,\n    'RWristYaw': 1.01393210888,\n},\n{\n    'HeadPitch': -0.371269971132,\n    'HeadYaw': -0.0521979629993,\n    'LAnklePitch': 0.78536605835,\n    'LAnkleRoll': -0.0567160397768,\n    'LElbowRoll': -0.875872075558,\n    'LElbowYaw': -2.08474802971,\n    'LHand': 0.23093482852,\n    'LHipPitch': -1.55083203316,\n    'LHipRoll': -0.0121720391512,\n    'LHipYawPitch': -0.458624064922,\n    'LKneePitch': 0.615092039108,\n    'LShoulderPitch': 0.246932044625,\n    'LShoulderRoll': 1.03694200516,\n    'LWristYaw': -0.681137979031,\n    'RAnklePitch': 0.786983966827,\n    'RAnkleRoll': 0.00924596190453,\n    'RElbowRoll': 0.725623965263,\n    'RElbowYaw': 1.77633011341,\n    'RHand': 0.307661861181,\n    'RHipPitch': -1.58466398716,\n    'RHipRoll': 0.126335967183,\n    'RKneePitch': 0.75323599577,\n    'RShoulderPitch': 0.231675967574,\n    'RShoulderRoll': -1.20729994774,\n    'RWristYaw': 1.02006804943,\n},\n]")]]>
+</content>
+                                                </script>
+                                                <pluginContent>
+                                                    <text>[{&#x0A;    &apos;HeadPitch&apos;: -0.34058997035,&#x0A;    &apos;HeadYaw&apos;: -0.335987985134,&#x0A;    &apos;LAnklePitch&apos;: 0.742414057255,&#x0A;    &apos;LAnkleRoll&apos;: 0.130431964993,&#x0A;    &apos;LElbowRoll&apos;: -1.0031940937,&#x0A;    &apos;LElbowYaw&apos;: -2.07707810402,&#x0A;    &apos;LHand&apos;: 0.23202572763,&#x0A;    &apos;LHipPitch&apos;: -1.56924009323,&#x0A;    &apos;LHipRoll&apos;: -0.053806045055,&#x0A;    &apos;LHipYawPitch&apos;: -0.450954049826,&#x0A;    &apos;LKneePitch&apos;: 1.53089010715,&#x0A;    &apos;LShoulderPitch&apos;: 0.978650093079,&#x0A;    &apos;LShoulderRoll&apos;: 0.779230058193,&#x0A;    &apos;LWristYaw&apos;: -0.625913977623,&#x0A;    &apos;RAnklePitch&apos;: 0.806926012039,&#x0A;    &apos;RAnkleRoll&apos;: -0.00302603840828,&#x0A;    &apos;RElbowRoll&apos;: 0.869819998741,&#x0A;    &apos;RElbowYaw&apos;: 0.090464040637,&#x0A;    &apos;RHand&apos;: 0.307661861181,&#x0A;    &apos;RHipPitch&apos;: -1.54324603081,&#x0A;    &apos;RHipRoll&apos;: 0.05462798357,&#x0A;    &apos;RKneePitch&apos;: 0.834537982941,&#x0A;    &apos;RShoulderPitch&apos;: -1.39743208885,&#x0A;    &apos;RShoulderRoll&apos;: -0.567621946335,&#x0A;    &apos;RWristYaw&apos;: 0.931096076965,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.382007956505,&#x0A;    &apos;HeadYaw&apos;: -0.305307984352,&#x0A;    &apos;LAnklePitch&apos;: 0.788434028625,&#x0A;    &apos;LAnkleRoll&apos;: 0.0276539623737,&#x0A;    &apos;LElbowRoll&apos;: -1.31919813156,&#x0A;    &apos;LElbowYaw&apos;: -1.68130600452,&#x0A;    &apos;LHand&apos;: 0.231662094593,&#x0A;    &apos;LHipPitch&apos;: -1.57230806351,&#x0A;    &apos;LHipRoll&apos;: -0.079884030819,&#x0A;    &apos;LHipYawPitch&apos;: -0.496974050999,&#x0A;    &apos;LKneePitch&apos;: 1.08756411076,&#x0A;    &apos;LShoulderPitch&apos;: -0.756303966045,&#x0A;    &apos;LShoulderRoll&apos;: 0.518450021744,&#x0A;    &apos;LWristYaw&apos;: -0.653525948524,&#x0A;    &apos;RAnklePitch&apos;: 0.783915996552,&#x0A;    &apos;RAnkleRoll&apos;: 0.00771196186543,&#x0A;    &apos;RElbowRoll&apos;: 1.50182795525,&#x0A;    &apos;RElbowYaw&apos;: 1.00166010857,&#x0A;    &apos;RHand&apos;: 0.307661861181,&#x0A;    &apos;RHipPitch&apos;: -1.56472206116,&#x0A;    &apos;RHipRoll&apos;: -0.047164042592,&#x0A;    &apos;RKneePitch&apos;: 0.88822799921,&#x0A;    &apos;RShoulderPitch&apos;: 0.283831954002,&#x0A;    &apos;RShoulderRoll&apos;: -0.335987985134,&#x0A;    &apos;RWristYaw&apos;: 0.921892046928,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.334453970194,&#x0A;    &apos;HeadYaw&apos;: 0.276078045368,&#x0A;    &apos;LAnklePitch&apos;: 0.783832073212,&#x0A;    &apos;LAnkleRoll&apos;: -0.013764038682,&#x0A;    &apos;LElbowRoll&apos;: -0.901950061321,&#x0A;    &apos;LElbowYaw&apos;: -0.36053198576,&#x0A;    &apos;LHand&apos;: 0.231662094593,&#x0A;    &apos;LHipPitch&apos;: -1.44498610497,&#x0A;    &apos;LHipRoll&apos;: 0.0474799638987,&#x0A;    &apos;LHipYawPitch&apos;: -0.420274049044,&#x0A;    &apos;LKneePitch&apos;: 0.397264063358,&#x0A;    &apos;LShoulderPitch&apos;: -1.26405799389,&#x0A;    &apos;LShoulderRoll&apos;: 0.987854063511,&#x0A;    &apos;LWristYaw&apos;: -0.665797948837,&#x0A;    &apos;RAnklePitch&apos;: 0.791585981846,&#x0A;    &apos;RAnkleRoll&apos;: 0.0491299629211,&#x0A;    &apos;RElbowRoll&apos;: 0.675001978874,&#x0A;    &apos;RElbowYaw&apos;: 0.59975206852,&#x0A;    &apos;RHand&apos;: 0.307298213243,&#x0A;    &apos;RHipPitch&apos;: -1.61227595806,&#x0A;    &apos;RHipRoll&apos;: -0.056542041302,&#x0A;    &apos;RKneePitch&apos;: 0.802323997021,&#x0A;    &apos;RShoulderPitch&apos;: -1.29465413094,&#x0A;    &apos;RShoulderRoll&apos;: -0.714885950089,&#x0A;    &apos;RWristYaw&apos;: 1.00779604912,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: 0.302156031132,&#x0A;    &apos;HeadYaw&apos;: 0.268408060074,&#x0A;    &apos;LAnklePitch&apos;: 0.786900043488,&#x0A;    &apos;LAnkleRoll&apos;: -0.0659200400114,&#x0A;    &apos;LElbowRoll&apos;: -1.52782201767,&#x0A;    &apos;LElbowYaw&apos;: -0.309909969568,&#x0A;    &apos;LHand&apos;: 0.231662094593,&#x0A;    &apos;LHipPitch&apos;: -1.58151209354,&#x0A;    &apos;LHipRoll&apos;: -0.146816060543,&#x0A;    &apos;LHipYawPitch&apos;: -0.429478049278,&#x0A;    &apos;LKneePitch&apos;: 0.708666086197,&#x0A;    &apos;LShoulderPitch&apos;: 0.0919980406761,&#x0A;    &apos;LShoulderRoll&apos;: 0.829852044582,&#x0A;    &apos;LWristYaw&apos;: -0.668865978718,&#x0A;    &apos;RAnklePitch&apos;: 0.782382011414,&#x0A;    &apos;RAnkleRoll&apos;: 0.0368579626083,&#x0A;    &apos;RElbowRoll&apos;: 1.54324603081,&#x0A;    &apos;RElbowYaw&apos;: 1.54009413719,&#x0A;    &apos;RHand&apos;: 0.307298213243,&#x0A;    &apos;RHipPitch&apos;: -1.50949800014,&#x0A;    &apos;RHipRoll&apos;: -0.334180040359,&#x0A;    &apos;RKneePitch&apos;: 0.633583962917,&#x0A;    &apos;RShoulderPitch&apos;: -0.773094058037,&#x0A;    &apos;RShoulderRoll&apos;: -0.737895965576,&#x0A;    &apos;RWristYaw&apos;: 1.01393210888,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.371269971132,&#x0A;    &apos;HeadYaw&apos;: -0.0521979629993,&#x0A;    &apos;LAnklePitch&apos;: 0.78536605835,&#x0A;    &apos;LAnkleRoll&apos;: -0.0567160397768,&#x0A;    &apos;LElbowRoll&apos;: -0.875872075558,&#x0A;    &apos;LElbowYaw&apos;: -2.08474802971,&#x0A;    &apos;LHand&apos;: 0.23093482852,&#x0A;    &apos;LHipPitch&apos;: -1.55083203316,&#x0A;    &apos;LHipRoll&apos;: -0.0121720391512,&#x0A;    &apos;LHipYawPitch&apos;: -0.458624064922,&#x0A;    &apos;LKneePitch&apos;: 0.615092039108,&#x0A;    &apos;LShoulderPitch&apos;: 0.246932044625,&#x0A;    &apos;LShoulderRoll&apos;: 1.03694200516,&#x0A;    &apos;LWristYaw&apos;: -0.681137979031,&#x0A;    &apos;RAnklePitch&apos;: 0.786983966827,&#x0A;    &apos;RAnkleRoll&apos;: 0.00924596190453,&#x0A;    &apos;RElbowRoll&apos;: 0.725623965263,&#x0A;    &apos;RElbowYaw&apos;: 1.77633011341,&#x0A;    &apos;RHand&apos;: 0.307661861181,&#x0A;    &apos;RHipPitch&apos;: -1.58466398716,&#x0A;    &apos;RHipRoll&apos;: 0.126335967183,&#x0A;    &apos;RKneePitch&apos;: 0.75323599577,&#x0A;    &apos;RShoulderPitch&apos;: 0.231675967574,&#x0A;    &apos;RShoulderRoll&apos;: -1.20729994774,&#x0A;    &apos;RWristYaw&apos;: 1.02006804943,&#x0A;},&#x0A;]</text>
+                                                </pluginContent>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Transmits text." id="2" />
+                                                <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="3" />
+                                            </Box>
+                                            <Box name="GenerateSentence7" robot="" id="13" tooltip='generates randomly a sentence which means : &quot;it wasn&apos;t me&quot;&#x0A;DELETED not appreciated not very coherant ' bitmap_expanded="1" plugin="" x="558" y="328">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import altools
+import random
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        self.sentence("")
+
+    def pickAccordingToLangage(self, sFrench, sEnglish):
+        self.tts = ALProxy("ALTextToSpeech")
+        sDefaultLang = self.tts.getLanguage()
+        if (sDefaultLang == "French"):
+            return (sFrench)
+        elif (sDefaultLang == "English"):
+            return (sEnglish)
+        else:
+            return (sEnglish)   
+
+    def onInput_onStart(self):
+        if (random.randrange(2) == 0):
+            sentenceFR = random.choice(["plus fort la musique!", "monte le son, j'adore ce passage.", "ça c'est de la bonne musique.", "regarde cette chorégraphie magnifique, c'est du grand art je trouve.", "viens bouger avec moi humain.", "cette bonne musique me donne envie de sortir en boite ce soir.", "je suis le roi de la piste de dance", "appelle les pompiers , je crois que je suis en train d'enflammer la piste."])
+            sentenceEN = random.choice(["turn the volume up, I like this part.", "that's good music!", "I know you can't help admiring me when I'm dancing. I'm a boss.", "I'm going to light up the dance floor.", "come dance with me!"])
+            self.sentence(self.pickAccordingToLangage(sentenceFR,sentenceEN))
+        else:
+            sound = random.choice(["wahou1.wav","wahou2.wav", "wahou3.wav" ,"wahou4.wav" ,"wahou5.wav" ,"wahou6.wav" ,"wahou7.wav"])
+            altools.playSound( sound, bPauseSoundAnalysis = False );
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="sentence" type="3" type_size="1" nature="2" inner="0" tooltip="sentence generated" id="4" />
+                                                <Output name="outputAnimation" type="1" type_size="1" nature="2" inner="0" tooltip="is triggered if animation is chosen as reaction" id="5" />
+                                            </Box>
+                                            <Box name="DanceInterpolatePose_p" robot="" id="14" tooltip="Dance by going from one pose to another, generating new pose by mixing two pose." bitmap_expanded="1" plugin="" x="732" y="77">
+                                                <bitmap>media/images/box/movement/move.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[# DanceInterpolatePose
+# v1.01
+
+import altools
+import random
+
+class MyClass(GeneratedClass):
+    """ insert here your comments about this class """
+    def __init__(self):
+        GeneratedClass.__init__(self);        
+    # __init__ - end
+        
+    def onLoad(self):
+        self.bMustStop = False;
+        self.bIsRunning = False;
+        self.aListPose = [];
+        self.nLastPose = -1;
+        self.nID = -1;
+
+    def onUnload(self):
+        self.onInput_onStop(); # stop current loop execution
+        
+    def doStuffInterpolateOnNewPose(self):
+        if( self.nLastPose == -1 ):
+            self.nLastPose = random.randint( 0, len( self.aListPose ) - 1 );
+            
+        nNewPose = random.randint( 0, len( self.aListPose ) - 1 );
+        rRatio = random.random();
+        somePos = altools.PoseLibrary.interpolatePosition( self.aListPose[self.nLastPose], self.aListPose[nNewPose], rRatio );
+        if( random.random() > 0.8 ):
+            # note la nouvelle pose, sinon il va continuer a faire des aller-retour autour de l'ancienne pose de base
+            self.nLastPose = nNewPose;
+        if( self.nID != -1 ):
+            try:
+                ALMotion.stop( self.nID );
+            except:
+                pass
+        if( self.getParameter( 'bVariableSpeed' ) ):
+            nRange = self.getParameter( 'nSpeedRange' );
+            nSpeedPercent = self.getParameter( 'nAverageSpeed' ) + random.randint( 0, nRange ) - ( nRange / 2 );
+        else:
+            nSpeedPercent = self.getParameter( 'nAverageSpeed' );
+        self.nID = altools.PoseLibrary.setPositionWithSpeed( somePos, nSpeedPercent, False );
+        
+    # doStuffInterpolateOnNewPose - end
+    
+    def mainLoop( self ):
+        self.log( self.boxName + ": start - begin" );
+        if( self.bIsRunning ):
+            self.log( self.boxName + ": already started => nothing" );
+            return;
+
+        self.bIsRunning = True;
+        self.bMustStop = False;
+        
+        while( not self.bMustStop ):
+            self.doStuffInterpolateOnNewPose();
+            
+            # il faut attendre un peu avant d'envoyer un ordre suivant
+            nSkitch = 16;
+            rSleepTime = self.getParameter( 'rPeriod' )  / float( nSkitch );
+            for i in range( nSkitch ):
+                time.sleep( rSleepTime );
+                if( not ALMotion.isRunning( self.nID ) ):
+                    # si l'anim précédente est finite, on en relance une direct ! (l'idée c'est d'en couper certaines, mais de pas attendre après des courtes deja finite)
+                    break;
+        # end while
+        self.bIsRunning = False;
+        self.onStopped();    
+        self.log( self.boxName + ": start - end" ); 
+
+    def onInput_onStop(self):
+        self.bMustStop = True; # stop current loop execution
+        if( self.nID != -1 ):
+            try:
+                ALMotion.stop( self.nID );
+            except:
+                pass
+            self.nID = -1;
+            
+    def onInput_onStart(self, strListPos):
+        self.aListPose = eval( strListPos );
+#        ALMotion.setStiffnesses( "LHipRoll", 0. ); # c'est bien, mais que assis !
+#        ALMotion.setStiffnesses( "RHipRoll", 0. );        
+        self.log( "%s: using %d pose(s)" % ( self.boxName, len( self.aListPose ) ) );
+        self.mainLoop();
+        
+pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Change the pose to interpolate by passing a list of new pos.&#x0A;The ListPos is a string to evaluate as an array of dict [ {list joint 1 }, {list joint 2} ... ].&#x0A;&#x0A;you must be able to go from one pose to each other" id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                                <Parameter name="rPeriod" inherits_from_parent="0" content_type="2" value="0.8" default_value="0.5" min="0" max="10" tooltip="Define the period of the timer box (in seconds)." id="5" />
+                                                <Parameter name="nAverageSpeed" inherits_from_parent="0" content_type="1" value="15" default_value="15" min="1" max="100" tooltip="AverageSpeed (or standard speed if speed variation isn&apos;t enabled)" id="6" />
+                                                <Parameter name="bVariableSpeed" inherits_from_parent="0" content_type="0" value="1" default_value="0" tooltip="Use various speed for movement" id="7" />
+                                                <Parameter name="nSpeedRange" inherits_from_parent="0" content_type="1" value="10" default_value="20" min="0" max="100" tooltip="Speed variation when variable speed is enabled" id="8" />
+                                            </Box>
+                                            <Box name="SayTextPrerender_ref" robot="" id="16" tooltip="Receive a string, precompute it, then say it!&#x0A;All steps are outputted to add synchro or interesting behaviors...&#x0A;&#x0A;v1.1" bitmap_expanded="1" plugin="" x="704" y="329">
+                                                <bitmap>media/images/box/icons_appu/sayPrecomputed.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[# SayTextPrerender - v1.1
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.nStateInit = 0;
+        self.nStatePreparing = 1;
+        self.nStateSpeaking = 2;
+        self.nStateStopped = 3;
+        
+    def onLoad(self):
+        self.nStep = self.nStateInit;
+        self.bStopped = False;
+    
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart(self, p):
+        if( self.nStep == self.nStateSpeaking or self.nStep == self.nStatePreparing ):
+            self.log( "%s: already speaking, won't say that sentence: '%s'" % ( self.boxName, p ) );
+            return;
+
+        self.bStopped = False;
+        txt = p;
+        self.nStep = self.nStatePreparing;
+        self.output_onPreparing();
+        if( self.getParameter( "bWithLight" ) ):
+            altools.sayAndCacheAndLight( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        else:
+            altools.sayAndCache( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        self.output_onPrepared();            
+        if( not self.getParameter( 'bJustPrepare' ) ):
+            if( not self.bStopped ):
+                self.nStep = self.nStateSpeaking;
+                self.output_onStartSpeaking();
+                if( self.getParameter( "bWithLight" ) ):
+                    altools.sayAndCacheAndLight( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                else:
+                    altools.sayAndCache( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+                self.output_onStopSpeaking();            
+        else:
+            pass
+        self.nStep = self.nStateStopped;
+    
+    def onInput_onStop(self):
+        nCpt = 0;
+        # adding a timeout
+        nMaxCpt = 60;
+        self.bStopped = True;
+        while( self.nStep == self.nStatePreparing and nCpt <= nMaxCpt ): # can't kill while preparing
+            print( "%s.onStop: waiting to stop than the sound is prepared..." % self.boxName );
+            time.sleep( 0.5 );
+            nCpt += 1;
+        if( nCpt > nMaxCpt ):
+            altools.playSound( 'warning_speech_error.wav' );
+        # on le fait plusieurs fois car des fois on peut se trouver pile entre le set du play et le lancage de la commande
+        for i in range( 3 ):
+            if( self.nStep == self.nStateSpeaking ):
+                altools.mySystemCall( "killall aplay" );     # todo: better killling method!
+                time.sleep( 0.2 );]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="output_onPreparing" type="1" type_size="1" nature="2" inner="0" tooltip="Text are being prepared" id="4" />
+                                                <Output name="output_onPrepared" type="1" type_size="1" nature="2" inner="0" tooltip="the sound is prepared and ready to be launched" id="5" />
+                                                <Output name="output_onStartSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao begin to speak" id="6" />
+                                                <Output name="output_onStopSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao has stop speaking" id="7" />
+                                                <Parameter name="bWithLight" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="use light in eyes to speak" id="8" />
+                                                <Parameter name="bJustPrepare" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Don&apos;t say the text now, just generate it." id="9" />
+                                                <Parameter name="bStoreToNonVolatilePath" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="copy the generated file to a non volatile path." id="10" />
+                                                <Parameter name="nNumLanguage" inherits_from_parent="0" content_type="1" value="-1" default_value="-1" min="-1" max="30" tooltip="To speak with a different speak language, specify it there (default -1: current one)" id="11" />
+                                            </Box>
+                                            <Box name="WaitALittle_p" robot="" id="5" tooltip="Like the wait it can be stopped immediately and reset at any time.&#x0A;&#x0A;The difference is the fact that the waiting time is random.&#x0A;&#x0A;Min: something minimal but never null (related to the max value)" bitmap_expanded="1" plugin="" x="323" y="459">
+                                                <bitmap>media/images/box/icons_appu/chrono.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import threading # opkg install python-threading
+import random
+
+class MyClass(GeneratedClass):
+  def __init__(self):
+    GeneratedClass.__init__(self)
+    self.tb = False;
+  
+  def onUnload(self):
+    self.onInput_onStop();
+    
+  def triggerOutput( self, rPeriod = 1 ):
+    self.onInput_onStop(); # to clean everything
+    self.timerOutput();
+  
+  def startTimer( self, rPeriod = 1 ):
+    if( self.tb ):
+      self.tb.cancel();
+    self.tb = threading.Timer( rPeriod, self.triggerOutput, [rPeriod] );
+    self.tb.start();
+
+  def onInput_onStart(self ):
+    rMax = self.getParameter( 'rWaitMax' );
+    rMin = rMax * 0.5; # the minimum time is relative to the maximum time (10 sec => 5 sec minimum)
+    rValueTime = random.random() * ( rMax - rMin ) + rMin;
+    self.log( "%s: wait %5.1f sec" % ( self.boxName, rValueTime ) );
+    self.startTimer( float(rValueTime) );
+  
+  def onInput_onStop(self):
+    if( self.tb ):
+      self.tb.cancel();
+      self.tb = False;]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Start the timer with a specified period value (in seconds)" id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Stop the timer" id="3" />
+                                                <Output name="timerOutput" type="1" type_size="1" nature="2" inner="0" tooltip="send a bang after a certain amount of time. Warning: don&apos;t outputted if stopped before time lapse." id="4" />
+                                                <Parameter name="rWaitMax" inherits_from_parent="0" content_type="2" value="20" default_value="30" min="0" max="1e+08" tooltip="the wait max value in seconds" id="5" />
+                                            </Box>
+                                            <Box name="WaitALittle_p" robot="" id="2" tooltip="Like the wait it can be stopped immediately and reset at any time.&#x0A;&#x0A;The difference is the fact that the waiting time is random.&#x0A;&#x0A;Min: something minimal but never null (related to the max value)" bitmap_expanded="1" plugin="" x="209" y="106">
+                                                <bitmap>media/images/box/icons_appu/chrono.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import threading # opkg install python-threading
+import random
+
+class MyClass(GeneratedClass):
+  def __init__(self):
+    GeneratedClass.__init__(self)
+    self.tb = False;
+  
+  def onUnload(self):
+    self.onInput_onStop();
+    
+  def triggerOutput( self, rPeriod = 1 ):
+    self.onInput_onStop(); # to clean everything
+    self.timerOutput();
+  
+  def startTimer( self, rPeriod = 1 ):
+    if( self.tb ):
+      self.tb.cancel();
+    self.tb = threading.Timer( rPeriod, self.triggerOutput, [rPeriod] );
+    self.tb.start();
+
+  def onInput_onStart(self ):
+    rMax = self.getParameter( 'rWaitMax' );
+    rMin = rMax * 0.5; # the minimum time is relative to the maximum time (10 sec => 5 sec minimum)
+    rValueTime = random.random() * ( rMax - rMin ) + rMin;
+    self.log( "%s: wait %5.1f sec" % ( self.boxName, rValueTime ) );
+    self.startTimer( float(rValueTime) );
+  
+  def onInput_onStop(self):
+    if( self.tb ):
+      self.tb.cancel();
+      self.tb = False;]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Start the timer with a specified period value (in seconds)" id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Stop the timer" id="3" />
+                                                <Output name="timerOutput" type="1" type_size="1" nature="2" inner="0" tooltip="send a bang after a certain amount of time. Warning: don&apos;t outputted if stopped before time lapse." id="4" />
+                                                <Parameter name="rWaitMax" inherits_from_parent="0" content_type="2" value="20" default_value="30" min="0" max="1e+08" tooltip="the wait max value in seconds" id="5" />
+                                            </Box>
+                                            <Box name="List 9 Poses" robot="" id="6" tooltip="This Box just transmits the text you entered when its Input is stimulated." bitmap_expanded="1" plugin="textedit_plugin" x="543" y="27">
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+
+	def onInput_onStart(self):
+		self.onStopped("[{\n    'HeadPitch': -0.403483986855,\n    'HeadYaw': 0.0766580402851,\n    'LAnklePitch': -0.452571988106,\n    'LAnkleRoll': -0.0873960405588,\n    'LElbowRoll': -0.674918055534,\n    'LElbowYaw': -1.8883960247,\n    'LHand': 0.251662045717,\n    'LHipPitch': -0.343574047089,\n    'LHipRoll': 0.250083982944,\n    'LHipYawPitch': -0.348176062107,\n    'LKneePitch': 0.983252048492,\n    'LShoulderPitch': 1.61832809448,\n    'LShoulderRoll': 0.51384806633,\n    'LWristYaw': -0.719487965107,\n    'RAnklePitch': -0.139552041888,\n    'RAnkleRoll': -0.0551820397377,\n    'RElbowRoll': 1.04316198826,\n    'RElbowYaw': 0.506178021431,\n    'RHand': 0.336389034986,\n    'RHipPitch': -0.0951499640942,\n    'RHipRoll': 0.210199967027,\n    'RKneePitch': 0.490921974182,\n    'RShoulderPitch': -0.966378092766,\n    'RShoulderRoll': -0.793119966984,\n    'RWristYaw': 0.960242033005,\n},\n{\n    'HeadPitch': 0.331302046776,\n    'HeadYaw': -0.469445973635,\n    'LAnklePitch': -0.228607967496,\n    'LAnkleRoll': -0.0199000388384,\n    'LElbowRoll': -1.12898206711,\n    'LElbowYaw': -1.12906599045,\n    'LHand': 0.251662045717,\n    'LHipPitch': -0.207048043609,\n    'LHipRoll': -0.013764038682,\n    'LHipYawPitch': -0.331302046776,\n    'LKneePitch': 0.639636039734,\n    'LShoulderPitch': -0.0798099637032,\n    'LShoulderRoll': 1.27931404114,\n    'LWristYaw': -0.719487965107,\n    'RAnklePitch': -0.259204030037,\n    'RAnkleRoll': -0.0337060391903,\n    'RElbowRoll': 1.07384204865,\n    'RElbowYaw': 1.92052602768,\n    'RHand': 0.336389034986,\n    'RHipPitch': -0.317579984665,\n    'RHipRoll': -0.0337060391903,\n    'RKneePitch': 0.756303966045,\n    'RShoulderPitch': 1.59233403206,\n    'RShoulderRoll': -0.765507996082,\n    'RWristYaw': 0.960242033005,\n},\n{\n    'HeadPitch': 0.33897203207,\n    'HeadYaw': -0.612107992172,\n    'LAnklePitch': -0.538475990295,\n    'LAnkleRoll': -0.322098046541,\n    'LElbowRoll': -1.01393210888,\n    'LElbowYaw': -2.06173801422,\n    'LHand': 0.251662045717,\n    'LHipPitch': -0.381924033165,\n    'LHipRoll': 0.662729978561,\n    'LHipYawPitch': -0.269942045212,\n    'LKneePitch': 1.16119611263,\n    'LShoulderPitch': 1.58918213844,\n    'LShoulderRoll': 1.14585602283,\n    'LWristYaw': -0.719487965107,\n    'RAnklePitch': -0.348176062107,\n    'RAnkleRoll': -0.0475120395422,\n    'RElbowRoll': 0.432629972696,\n    'RElbowYaw': 2.07085800171,\n    'RHand': 0.336389034986,\n    'RHipPitch': -0.0291879624128,\n    'RHipRoll': 0.312977969646,\n    'RKneePitch': 0.716419994831,\n    'RShoulderPitch': 1.85464799404,\n    'RShoulderRoll': -0.441833972931,\n    'RWristYaw': 0.944902062416,\n},\n{\n    'HeadPitch': -0.22247196734,\n    'HeadYaw': 0.501576066017,\n    'LAnklePitch': -0.451037973166,\n    'LAnkleRoll': -0.365050047636,\n    'LElbowRoll': -1.09983611107,\n    'LElbowYaw': -0.744031965733,\n    'LHand': 0.251662045717,\n    'LHipPitch': -0.489304065704,\n    'LHipRoll': 0.638185977936,\n    'LHipYawPitch': -0.279146045446,\n    'LKneePitch': 1.16579806805,\n    'LShoulderPitch': -0.771643996239,\n    'LShoulderRoll': 0.963310062885,\n    'LWristYaw': -0.714885950089,\n    'RAnklePitch': -0.323632061481,\n    'RAnkleRoll': -0.0705220401287,\n    'RElbowRoll': 0.946519970894,\n    'RElbowYaw': 2.07239198685,\n    'RHand': 0.338934481144,\n    'RHipPitch': -0.237811967731,\n    'RHipRoll': 0.297637969255,\n    'RKneePitch': 0.88822799921,\n    'RShoulderPitch': 1.1075899601,\n    'RShoulderRoll': -1.53404200077,\n    'RWristYaw': 0.943368077278,\n},\n{\n    'HeadPitch': 0.265340030193,\n    'HeadYaw': 0.366584062576,\n    'LAnklePitch': -0.372803986073,\n    'LAnkleRoll': 4.19616699219e-05,\n    'LElbowRoll': -0.386526048183,\n    'LElbowYaw': -1.30087399483,\n    'LHand': 0.249843865633,\n    'LHipPitch': -0.108872041106,\n    'LHipRoll': -0.122678041458,\n    'LHipYawPitch': -0.381924033165,\n    'LKneePitch': 0.880474090576,\n    'LShoulderPitch': 2.06318807602,\n    'LShoulderRoll': 0.997058033943,\n    'LWristYaw': -0.702613949776,\n    'RAnklePitch': -0.292952060699,\n    'RAnkleRoll': 0.368201971054,\n    'RElbowRoll': 1.115260005,\n    'RElbowYaw': 2.04171204567,\n    'RHand': 0.334570854902,\n    'RHipPitch': -0.346725970507,\n    'RHipRoll': -0.616626024246,\n    'RKneePitch': 0.960325956345,\n    'RShoulderPitch': 1.08611392975,\n    'RShoulderRoll': -1.46347796917,\n    'RWristYaw': 0.926494061947,\n}\n,\n{\n    'HeadPitch': -0.279229968786,\n    'HeadYaw': -0.724089980125,\n    'LAnklePitch': -0.661195993423,\n    'LAnkleRoll': -0.0168320387602,\n    'LElbowRoll': -1.03540802002,\n    'LElbowYaw': -2.05100011826,\n    'LHand': 0.249480217695,\n    'LHipPitch': -0.283748030663,\n    'LHipRoll': 0.0383919626474,\n    'LHipYawPitch': -0.315962046385,\n    'LKneePitch': 1.34220802784,\n    'LShoulderPitch': 1.12438011169,\n    'LShoulderRoll': 1.54776406288,\n    'LWristYaw': -0.704147994518,\n    'RAnklePitch': -0.54606205225,\n    'RAnkleRoll': 0.383541971445,\n    'RElbowRoll': 0.659662008286,\n    'RElbowYaw': 0.806842088699,\n    'RHand': 0.334570854902,\n    'RHipPitch': -0.27155995369,\n    'RHipRoll': -0.527654051781,\n    'RKneePitch': 1.21803796291,\n    'RShoulderPitch': 1.34075796604,\n    'RShoulderRoll': -0.943452000618,\n    'RWristYaw': 0.924960076809,\n},\n{\n    'HeadPitch': 0.506178021431,\n    'HeadYaw': -0.0736739635468,\n    'LAnklePitch': -0.139635965228,\n    'LAnkleRoll': -0.118076041341,\n    'LElbowRoll': -0.111940041184,\n    'LElbowYaw': -0.602903962135,\n    'LHand': 0.249480217695,\n    'LHipPitch': -0.217786043882,\n    'LHipRoll': 0.13656796515,\n    'LHipYawPitch': -0.35891404748,\n    'LKneePitch': 0.487770050764,\n    'LShoulderPitch': 0.909620046616,\n    'LShoulderRoll': 0.10273604095,\n    'LWristYaw': -0.704147994518,\n    'RAnklePitch': -0.0122300386429,\n    'RAnkleRoll': 0.092081964016,\n    'RElbowRoll': 0.92044198513,\n    'RElbowYaw': 0.406468033791,\n    'RHand': 0.334570854902,\n    'RHipPitch': -0.250083982944,\n    'RHipRoll': -0.075124040246,\n    'RKneePitch': 0.380473971367,\n    'RShoulderPitch': 0.912771999836,\n    'RShoulderRoll': -0.107421964407,\n    'RWristYaw': 0.909620046616,\n},\n{\n   'HeadPitch': -0.51393198967,\n    'HeadYaw': -0.724089980125,\n    'LAnklePitch': -0.398881971836,\n    'LAnkleRoll': -0.173300042748,\n    'LElbowRoll': -0.207048043609,\n    'LElbowYaw': -2.07861208916,\n    'LHand': 0.249480217695,\n    'LHipPitch': -0.115008041263,\n    'LHipRoll': 0.351327955723,\n    'LHipYawPitch': -0.326700031757,\n    'LKneePitch': 0.760822057724,\n    'LShoulderPitch': 1.67508602142,\n    'LShoulderRoll': 0.440216064453,\n    'LWristYaw': -0.728691995144,\n    'RAnklePitch': 0.0445279628038,\n    'RAnkleRoll': 0.0798099637032,\n    'RElbowRoll': 0.535407960415,\n    'RElbowYaw': 0.466294050217,\n    'RHand': 0.334570854902,\n    'RHipPitch': 0.122678041458,\n    'RHipRoll': 0.0460619628429,\n    'RKneePitch': 0.151907965541,\n    'RShoulderPitch': -1.35141205788,\n    'RShoulderRoll': -0.504727959633,\n    'RWristYaw': 0.912688076496,\n},\n{\n    'HeadPitch': -0.0736739635468,\n    'HeadYaw': -0.440299987793,\n    'LAnklePitch': -0.181053966284,\n    'LAnkleRoll': -0.176368042827,\n    'LElbowRoll': -0.814512073994,\n    'LElbowYaw': -0.0614019632339,\n    'LHand': 0.249480217695,\n    'LHipPitch': 0.0230519622564,\n    'LHipRoll': 0.214801967144,\n    'LHipYawPitch': -0.236194044352,\n    'LKneePitch': 0.408002048731,\n    'LShoulderPitch': -1.12753200531,\n    'LShoulderRoll': 0.900416076183,\n    'LWristYaw': -0.733294010162,\n    'RAnklePitch': -0.17023204267,\n    'RAnkleRoll': 0.0399259626865,\n    'RElbowRoll': 1.21957194805,\n    'RElbowYaw': 1.99415802956,\n    'RHand': 0.334570854902,\n    'RHipPitch': -0.0383919626474,\n    'RHipRoll': -0.0459780395031,\n    'RKneePitch': 0.4602419734,\n    'RShoulderPitch': 1.75800597668,\n    'RShoulderRoll': -0.228607967496,\n    'RWristYaw': 0.911154031754,\n},\n]")]]>
+</content>
+                                                </script>
+                                                <pluginContent>
+                                                    <text>[{&#x0A;    &apos;HeadPitch&apos;: -0.403483986855,&#x0A;    &apos;HeadYaw&apos;: 0.0766580402851,&#x0A;    &apos;LAnklePitch&apos;: -0.452571988106,&#x0A;    &apos;LAnkleRoll&apos;: -0.0873960405588,&#x0A;    &apos;LElbowRoll&apos;: -0.674918055534,&#x0A;    &apos;LElbowYaw&apos;: -1.8883960247,&#x0A;    &apos;LHand&apos;: 0.251662045717,&#x0A;    &apos;LHipPitch&apos;: -0.343574047089,&#x0A;    &apos;LHipRoll&apos;: 0.250083982944,&#x0A;    &apos;LHipYawPitch&apos;: -0.348176062107,&#x0A;    &apos;LKneePitch&apos;: 0.983252048492,&#x0A;    &apos;LShoulderPitch&apos;: 1.61832809448,&#x0A;    &apos;LShoulderRoll&apos;: 0.51384806633,&#x0A;    &apos;LWristYaw&apos;: -0.719487965107,&#x0A;    &apos;RAnklePitch&apos;: -0.139552041888,&#x0A;    &apos;RAnkleRoll&apos;: -0.0551820397377,&#x0A;    &apos;RElbowRoll&apos;: 1.04316198826,&#x0A;    &apos;RElbowYaw&apos;: 0.506178021431,&#x0A;    &apos;RHand&apos;: 0.336389034986,&#x0A;    &apos;RHipPitch&apos;: -0.0951499640942,&#x0A;    &apos;RHipRoll&apos;: 0.210199967027,&#x0A;    &apos;RKneePitch&apos;: 0.490921974182,&#x0A;    &apos;RShoulderPitch&apos;: -0.966378092766,&#x0A;    &apos;RShoulderRoll&apos;: -0.793119966984,&#x0A;    &apos;RWristYaw&apos;: 0.960242033005,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: 0.331302046776,&#x0A;    &apos;HeadYaw&apos;: -0.469445973635,&#x0A;    &apos;LAnklePitch&apos;: -0.228607967496,&#x0A;    &apos;LAnkleRoll&apos;: -0.0199000388384,&#x0A;    &apos;LElbowRoll&apos;: -1.12898206711,&#x0A;    &apos;LElbowYaw&apos;: -1.12906599045,&#x0A;    &apos;LHand&apos;: 0.251662045717,&#x0A;    &apos;LHipPitch&apos;: -0.207048043609,&#x0A;    &apos;LHipRoll&apos;: -0.013764038682,&#x0A;    &apos;LHipYawPitch&apos;: -0.331302046776,&#x0A;    &apos;LKneePitch&apos;: 0.639636039734,&#x0A;    &apos;LShoulderPitch&apos;: -0.0798099637032,&#x0A;    &apos;LShoulderRoll&apos;: 1.27931404114,&#x0A;    &apos;LWristYaw&apos;: -0.719487965107,&#x0A;    &apos;RAnklePitch&apos;: -0.259204030037,&#x0A;    &apos;RAnkleRoll&apos;: -0.0337060391903,&#x0A;    &apos;RElbowRoll&apos;: 1.07384204865,&#x0A;    &apos;RElbowYaw&apos;: 1.92052602768,&#x0A;    &apos;RHand&apos;: 0.336389034986,&#x0A;    &apos;RHipPitch&apos;: -0.317579984665,&#x0A;    &apos;RHipRoll&apos;: -0.0337060391903,&#x0A;    &apos;RKneePitch&apos;: 0.756303966045,&#x0A;    &apos;RShoulderPitch&apos;: 1.59233403206,&#x0A;    &apos;RShoulderRoll&apos;: -0.765507996082,&#x0A;    &apos;RWristYaw&apos;: 0.960242033005,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: 0.33897203207,&#x0A;    &apos;HeadYaw&apos;: -0.612107992172,&#x0A;    &apos;LAnklePitch&apos;: -0.538475990295,&#x0A;    &apos;LAnkleRoll&apos;: -0.322098046541,&#x0A;    &apos;LElbowRoll&apos;: -1.01393210888,&#x0A;    &apos;LElbowYaw&apos;: -2.06173801422,&#x0A;    &apos;LHand&apos;: 0.251662045717,&#x0A;    &apos;LHipPitch&apos;: -0.381924033165,&#x0A;    &apos;LHipRoll&apos;: 0.662729978561,&#x0A;    &apos;LHipYawPitch&apos;: -0.269942045212,&#x0A;    &apos;LKneePitch&apos;: 1.16119611263,&#x0A;    &apos;LShoulderPitch&apos;: 1.58918213844,&#x0A;    &apos;LShoulderRoll&apos;: 1.14585602283,&#x0A;    &apos;LWristYaw&apos;: -0.719487965107,&#x0A;    &apos;RAnklePitch&apos;: -0.348176062107,&#x0A;    &apos;RAnkleRoll&apos;: -0.0475120395422,&#x0A;    &apos;RElbowRoll&apos;: 0.432629972696,&#x0A;    &apos;RElbowYaw&apos;: 2.07085800171,&#x0A;    &apos;RHand&apos;: 0.336389034986,&#x0A;    &apos;RHipPitch&apos;: -0.0291879624128,&#x0A;    &apos;RHipRoll&apos;: 0.312977969646,&#x0A;    &apos;RKneePitch&apos;: 0.716419994831,&#x0A;    &apos;RShoulderPitch&apos;: 1.85464799404,&#x0A;    &apos;RShoulderRoll&apos;: -0.441833972931,&#x0A;    &apos;RWristYaw&apos;: 0.944902062416,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.22247196734,&#x0A;    &apos;HeadYaw&apos;: 0.501576066017,&#x0A;    &apos;LAnklePitch&apos;: -0.451037973166,&#x0A;    &apos;LAnkleRoll&apos;: -0.365050047636,&#x0A;    &apos;LElbowRoll&apos;: -1.09983611107,&#x0A;    &apos;LElbowYaw&apos;: -0.744031965733,&#x0A;    &apos;LHand&apos;: 0.251662045717,&#x0A;    &apos;LHipPitch&apos;: -0.489304065704,&#x0A;    &apos;LHipRoll&apos;: 0.638185977936,&#x0A;    &apos;LHipYawPitch&apos;: -0.279146045446,&#x0A;    &apos;LKneePitch&apos;: 1.16579806805,&#x0A;    &apos;LShoulderPitch&apos;: -0.771643996239,&#x0A;    &apos;LShoulderRoll&apos;: 0.963310062885,&#x0A;    &apos;LWristYaw&apos;: -0.714885950089,&#x0A;    &apos;RAnklePitch&apos;: -0.323632061481,&#x0A;    &apos;RAnkleRoll&apos;: -0.0705220401287,&#x0A;    &apos;RElbowRoll&apos;: 0.946519970894,&#x0A;    &apos;RElbowYaw&apos;: 2.07239198685,&#x0A;    &apos;RHand&apos;: 0.338934481144,&#x0A;    &apos;RHipPitch&apos;: -0.237811967731,&#x0A;    &apos;RHipRoll&apos;: 0.297637969255,&#x0A;    &apos;RKneePitch&apos;: 0.88822799921,&#x0A;    &apos;RShoulderPitch&apos;: 1.1075899601,&#x0A;    &apos;RShoulderRoll&apos;: -1.53404200077,&#x0A;    &apos;RWristYaw&apos;: 0.943368077278,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: 0.265340030193,&#x0A;    &apos;HeadYaw&apos;: 0.366584062576,&#x0A;    &apos;LAnklePitch&apos;: -0.372803986073,&#x0A;    &apos;LAnkleRoll&apos;: 4.19616699219e-05,&#x0A;    &apos;LElbowRoll&apos;: -0.386526048183,&#x0A;    &apos;LElbowYaw&apos;: -1.30087399483,&#x0A;    &apos;LHand&apos;: 0.249843865633,&#x0A;    &apos;LHipPitch&apos;: -0.108872041106,&#x0A;    &apos;LHipRoll&apos;: -0.122678041458,&#x0A;    &apos;LHipYawPitch&apos;: -0.381924033165,&#x0A;    &apos;LKneePitch&apos;: 0.880474090576,&#x0A;    &apos;LShoulderPitch&apos;: 2.06318807602,&#x0A;    &apos;LShoulderRoll&apos;: 0.997058033943,&#x0A;    &apos;LWristYaw&apos;: -0.702613949776,&#x0A;    &apos;RAnklePitch&apos;: -0.292952060699,&#x0A;    &apos;RAnkleRoll&apos;: 0.368201971054,&#x0A;    &apos;RElbowRoll&apos;: 1.115260005,&#x0A;    &apos;RElbowYaw&apos;: 2.04171204567,&#x0A;    &apos;RHand&apos;: 0.334570854902,&#x0A;    &apos;RHipPitch&apos;: -0.346725970507,&#x0A;    &apos;RHipRoll&apos;: -0.616626024246,&#x0A;    &apos;RKneePitch&apos;: 0.960325956345,&#x0A;    &apos;RShoulderPitch&apos;: 1.08611392975,&#x0A;    &apos;RShoulderRoll&apos;: -1.46347796917,&#x0A;    &apos;RWristYaw&apos;: 0.926494061947,&#x0A;}&#x0A;,&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.279229968786,&#x0A;    &apos;HeadYaw&apos;: -0.724089980125,&#x0A;    &apos;LAnklePitch&apos;: -0.661195993423,&#x0A;    &apos;LAnkleRoll&apos;: -0.0168320387602,&#x0A;    &apos;LElbowRoll&apos;: -1.03540802002,&#x0A;    &apos;LElbowYaw&apos;: -2.05100011826,&#x0A;    &apos;LHand&apos;: 0.249480217695,&#x0A;    &apos;LHipPitch&apos;: -0.283748030663,&#x0A;    &apos;LHipRoll&apos;: 0.0383919626474,&#x0A;    &apos;LHipYawPitch&apos;: -0.315962046385,&#x0A;    &apos;LKneePitch&apos;: 1.34220802784,&#x0A;    &apos;LShoulderPitch&apos;: 1.12438011169,&#x0A;    &apos;LShoulderRoll&apos;: 1.54776406288,&#x0A;    &apos;LWristYaw&apos;: -0.704147994518,&#x0A;    &apos;RAnklePitch&apos;: -0.54606205225,&#x0A;    &apos;RAnkleRoll&apos;: 0.383541971445,&#x0A;    &apos;RElbowRoll&apos;: 0.659662008286,&#x0A;    &apos;RElbowYaw&apos;: 0.806842088699,&#x0A;    &apos;RHand&apos;: 0.334570854902,&#x0A;    &apos;RHipPitch&apos;: -0.27155995369,&#x0A;    &apos;RHipRoll&apos;: -0.527654051781,&#x0A;    &apos;RKneePitch&apos;: 1.21803796291,&#x0A;    &apos;RShoulderPitch&apos;: 1.34075796604,&#x0A;    &apos;RShoulderRoll&apos;: -0.943452000618,&#x0A;    &apos;RWristYaw&apos;: 0.924960076809,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: 0.506178021431,&#x0A;    &apos;HeadYaw&apos;: -0.0736739635468,&#x0A;    &apos;LAnklePitch&apos;: -0.139635965228,&#x0A;    &apos;LAnkleRoll&apos;: -0.118076041341,&#x0A;    &apos;LElbowRoll&apos;: -0.111940041184,&#x0A;    &apos;LElbowYaw&apos;: -0.602903962135,&#x0A;    &apos;LHand&apos;: 0.249480217695,&#x0A;    &apos;LHipPitch&apos;: -0.217786043882,&#x0A;    &apos;LHipRoll&apos;: 0.13656796515,&#x0A;    &apos;LHipYawPitch&apos;: -0.35891404748,&#x0A;    &apos;LKneePitch&apos;: 0.487770050764,&#x0A;    &apos;LShoulderPitch&apos;: 0.909620046616,&#x0A;    &apos;LShoulderRoll&apos;: 0.10273604095,&#x0A;    &apos;LWristYaw&apos;: -0.704147994518,&#x0A;    &apos;RAnklePitch&apos;: -0.0122300386429,&#x0A;    &apos;RAnkleRoll&apos;: 0.092081964016,&#x0A;    &apos;RElbowRoll&apos;: 0.92044198513,&#x0A;    &apos;RElbowYaw&apos;: 0.406468033791,&#x0A;    &apos;RHand&apos;: 0.334570854902,&#x0A;    &apos;RHipPitch&apos;: -0.250083982944,&#x0A;    &apos;RHipRoll&apos;: -0.075124040246,&#x0A;    &apos;RKneePitch&apos;: 0.380473971367,&#x0A;    &apos;RShoulderPitch&apos;: 0.912771999836,&#x0A;    &apos;RShoulderRoll&apos;: -0.107421964407,&#x0A;    &apos;RWristYaw&apos;: 0.909620046616,&#x0A;},&#x0A;{&#x0A;   &apos;HeadPitch&apos;: -0.51393198967,&#x0A;    &apos;HeadYaw&apos;: -0.724089980125,&#x0A;    &apos;LAnklePitch&apos;: -0.398881971836,&#x0A;    &apos;LAnkleRoll&apos;: -0.173300042748,&#x0A;    &apos;LElbowRoll&apos;: -0.207048043609,&#x0A;    &apos;LElbowYaw&apos;: -2.07861208916,&#x0A;    &apos;LHand&apos;: 0.249480217695,&#x0A;    &apos;LHipPitch&apos;: -0.115008041263,&#x0A;    &apos;LHipRoll&apos;: 0.351327955723,&#x0A;    &apos;LHipYawPitch&apos;: -0.326700031757,&#x0A;    &apos;LKneePitch&apos;: 0.760822057724,&#x0A;    &apos;LShoulderPitch&apos;: 1.67508602142,&#x0A;    &apos;LShoulderRoll&apos;: 0.440216064453,&#x0A;    &apos;LWristYaw&apos;: -0.728691995144,&#x0A;    &apos;RAnklePitch&apos;: 0.0445279628038,&#x0A;    &apos;RAnkleRoll&apos;: 0.0798099637032,&#x0A;    &apos;RElbowRoll&apos;: 0.535407960415,&#x0A;    &apos;RElbowYaw&apos;: 0.466294050217,&#x0A;    &apos;RHand&apos;: 0.334570854902,&#x0A;    &apos;RHipPitch&apos;: 0.122678041458,&#x0A;    &apos;RHipRoll&apos;: 0.0460619628429,&#x0A;    &apos;RKneePitch&apos;: 0.151907965541,&#x0A;    &apos;RShoulderPitch&apos;: -1.35141205788,&#x0A;    &apos;RShoulderRoll&apos;: -0.504727959633,&#x0A;    &apos;RWristYaw&apos;: 0.912688076496,&#x0A;},&#x0A;{&#x0A;    &apos;HeadPitch&apos;: -0.0736739635468,&#x0A;    &apos;HeadYaw&apos;: -0.440299987793,&#x0A;    &apos;LAnklePitch&apos;: -0.181053966284,&#x0A;    &apos;LAnkleRoll&apos;: -0.176368042827,&#x0A;    &apos;LElbowRoll&apos;: -0.814512073994,&#x0A;    &apos;LElbowYaw&apos;: -0.0614019632339,&#x0A;    &apos;LHand&apos;: 0.249480217695,&#x0A;    &apos;LHipPitch&apos;: 0.0230519622564,&#x0A;    &apos;LHipRoll&apos;: 0.214801967144,&#x0A;    &apos;LHipYawPitch&apos;: -0.236194044352,&#x0A;    &apos;LKneePitch&apos;: 0.408002048731,&#x0A;    &apos;LShoulderPitch&apos;: -1.12753200531,&#x0A;    &apos;LShoulderRoll&apos;: 0.900416076183,&#x0A;    &apos;LWristYaw&apos;: -0.733294010162,&#x0A;    &apos;RAnklePitch&apos;: -0.17023204267,&#x0A;    &apos;RAnkleRoll&apos;: 0.0399259626865,&#x0A;    &apos;RElbowRoll&apos;: 1.21957194805,&#x0A;    &apos;RElbowYaw&apos;: 1.99415802956,&#x0A;    &apos;RHand&apos;: 0.334570854902,&#x0A;    &apos;RHipPitch&apos;: -0.0383919626474,&#x0A;    &apos;RHipRoll&apos;: -0.0459780395031,&#x0A;    &apos;RKneePitch&apos;: 0.4602419734,&#x0A;    &apos;RShoulderPitch&apos;: 1.75800597668,&#x0A;    &apos;RShoulderRoll&apos;: -0.228607967496,&#x0A;    &apos;RWristYaw&apos;: 0.911154031754,&#x0A;},&#x0A;]</text>
+                                                </pluginContent>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Transmits text." id="2" />
+                                                <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="3" />
+                                            </Box>
+                                            <Box name="IsStanding_p" robot="" id="1" tooltip="Is nao currenlty standing" bitmap_expanded="1" plugin="" x="359" y="14">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import behaviordata
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self ):
+
+        if( behaviordata.branchOnNaoPosition() == 0 ):
+            self.output_yes()
+        else:
+            self.output_no()
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="output_yes" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                                <Output name="output_no" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
+                                            </Box>
+                                            <Link inputowner="14" indexofinput="2" outputowner="7" indexofoutput="3" />
+                                            <Link inputowner="16" indexofinput="2" outputowner="13" indexofoutput="4" />
+                                            <Link inputowner="13" indexofinput="2" outputowner="5" indexofoutput="4" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="16" indexofoutput="7" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
+                                            <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
+                                            <Link inputowner="2" indexofinput="2" outputowner="2" indexofoutput="4" />
+                                            <Link inputowner="6" indexofinput="2" outputowner="1" indexofoutput="4" />
+                                            <Link inputowner="7" indexofinput="2" outputowner="1" indexofoutput="5" />
+                                            <Link inputowner="14" indexofinput="2" outputowner="6" indexofoutput="3" />
+                                            <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="4" />
+                                            <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
+                                            <Link inputowner="0" indexofinput="5" outputowner="16" indexofoutput="4" />
+                                            <Link inputowner="0" indexofinput="6" outputowner="16" indexofoutput="7" />
+                                        </Diagram>
+                                    </BehaviorKeyframe>
+                                </BehaviorLayer>
+                                <ActuatorList />
+                            </Timeline>
+                        </Box>
+                        <Box name="TextEdit" robot="" id="6" tooltip="This Box just transmits the text you entered when its Input is stimulated." bitmap_expanded="1" plugin="textedit_plugin" x="115" y="298">
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+
+	def onInput_onStart(self):
+		self.onStopped("music_detected")]]>
+</content>
+                            </script>
+                            <pluginContent>
+                                <text>music_detected</text>
+                            </pluginContent>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Transmits text." id="2" />
+                            <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="3" />
+                        </Box>
+                        <Box name="EnvData_RegisterToValueBool - modif: repost every 2 sec" robot="" id="8" tooltip="Subscribe to a value to know when data has changed - the data is a bool data.&#x0A;*** ref box in: ./2_wip/AutonomousLife/work/AutonomousLife.xar ***&#x0A;*** last modification date(git):   Fri Nov 27 18:45:08 2009 +0100 ***" bitmap_expanded="1" plugin="" x="318" y="395">
+                            <bitmap>media/images/box/sensors/STM.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import behaviordata
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.strRegisteredDataName = "";
+        self.BIND_PYTHON( self.getName(),"myDataChanged" );
+        self.bStop = False;
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        self.onInput_onStop();
+
+    def onInput_onDataName(self, pstrDataName):
+        self.onInput_onStop();
+        self.bStop = False;        
+        self.strRegisteredDataName = pstrDataName;
+        strTotalVarName = behaviordata.extractedData.getStmRootName() + self.strRegisteredDataName;
+        ALMemory.subscribeToMicroEvent( strTotalVarName, self.getName(), "", "myDataChanged" );
+        while( not self.bStop ):
+            # force a triggering even if not changed
+            self.myDataChanged( strTotalVarName, behaviordata.extractedData.getValue( self.strRegisteredDataName ), "" );
+            time.sleep( 2.0 );
+       
+    def onInput_onStop(self):
+        self.bStop = True;    
+        if( self.strRegisteredDataName != "" ):
+            ALMemory.unsubscribeToMicroEvent( behaviordata.extractedData.getStmRootName() + self.strRegisteredDataName, self.getName() );
+            self.strRegisteredDataName = "";
+        
+    def myDataChanged(self, pDataName, pValue, pMessage):
+        self.log( "%s.myDataChanged: msg: %s; dataname: %s; value: %s" % ( self.boxName, str( pMessage ), str( pDataName ), str( pValue ) ) );
+        if( pValue ):
+            self.output_Value_True();
+        else:
+            self.output_Value_False();
+        
+pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onDataName" type="3" type_size="1" nature="2" inner="0" tooltip="" id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="" id="3" />
+                            <Output name="output_Value_True" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                            <Output name="output_Value_False" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
+                        </Box>
+                        <Box name="stopDancing" robot="" id="17" tooltip="mouvement to stop moving + sentence" bitmap_expanded="1" plugin="" x="564" y="297">
+                            <bitmap>media/images/box/movement/move.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                            <Timeline fps="10" resources_acquisition="0" size="300" enable="1" start_frame="0" end_frame="-1" scale="10">
+                                <watches />
+                                <BehaviorLayer name="behavior_layer1" mute="0">
+                                    <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                                        <Diagram scale="-1">
+                                            <Box name="GenerateSentence7" robot="" id="1" tooltip='generates randomly a sentence which means : &quot;it wasn&apos;t me&quot;&#x0A;DELETED not appreciated not very coherant ' bitmap_expanded="1" plugin="" x="230" y="81">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import altools
+import random
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        self.sentence("")
+
+    def pickAccordingToLangage(self, sFrench, sEnglish):
+        self.tts = ALProxy("ALTextToSpeech")
+        sDefaultLang = self.tts.getLanguage()
+        if (sDefaultLang == "French"):
+            return (sFrench)
+        elif (sDefaultLang == "English"):
+            return (sEnglish)
+        else:
+            return (sEnglish)   
+
+    def onInput_onStart(self):
+        sentenceFR = random.choice(["hey! qui a coupé la musique?", "dommage il n'y a plus de musique.", "Quelqu'un a coupé le son ou quoi?", "ça m'a fait du bien de me déhancher un peu!", "vazy, remet la musique s'il te plait, j'aimais bien ce passage.", "dommage qu'il y ait plus de musique, je commençais juste à m'échauffer."])
+        sentenceEN = random.choice(["hey! what's going on? who stopped the music?", "someone turned the music  off.", "it's a pity you stopped music, I was just warming up.", "hey! put another track, I'm not done dancing.", "come on, don't stop the music, I like this song"])
+        self.sentence(self.pickAccordingToLangage(sentenceFR,sentenceEN))
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="sentence" type="3" type_size="1" nature="2" inner="0" tooltip="sentence generated" id="4" />
+                                                <Output name="outputAnimation" type="1" type_size="1" nature="2" inner="0" tooltip="is triggered if animation is chosen as reaction" id="5" />
+                                            </Box>
+                                            <Box name="Say Text" robot="" id="3" tooltip="Say the sentence asked. See box parameters for fine tuning of the voice." bitmap_expanded="1" plugin="" x="399" y="182">
+                                                <bitmap>media/images/box/interaction/say.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.tts = ALProxy('ALTextToSpeech')
+        self.ttsStop = ALProxy('ALTextToSpeech', True) #Create another proxy as wait is blocking if audioout is remote
+        
+    def onLoad(self):
+        #puts code for box cleanup here
+        self.ids = []
+        
+    def onUnload(self):
+        #puts code for box cleanup here    
+        for id in self.ids:
+            try:
+                self.ttsStop.stop(id)
+            except:
+                pass
+        
+    def onInput_onStart(self, p):
+        sentence = "\RSPD="+ str( self.getParameter("speed") )+ "\ "
+        sentence += "\VCT="+ str( self.getParameter("Voice Shaping") ) + "\ " 
+        sentence += str(p)
+        sentence +=  "\RST\ "
+        id = self.tts.post.say(sentence)
+        self.ids.append(id)
+        self.tts.wait(id, 0)
+        self.ids.remove(id)
+        self.onStopped() # activate output of the box
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
+                                                <Parameter name="Voice Shaping" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='This tag is used to modify at runtime the voice feature (tone, speed) in way slightly different of what pitch and speed modification does, giving a kind of &quot;gender or age modification &quot; effect.&#x0A;&#x0A;To better tune the effect, one should compensate the speed modification due to the value parameter. For exemple to keep an average constant speed, one should add 20% to speed parameter when decreasing 20% to the Voice Shaping (VCT) parameter :&#x0A;&#x0A;A quite good male derivation of female voice for example could be obtained using the following parameters: VCT=78.' id="5" />
+                                                <Parameter name="speed" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="change the speed of the voice" id="6" />
+                                            </Box>
+                                            <Box name="SayTextPrerender_ref" robot="" id="4" tooltip="Receive a string, precompute it, then say it!&#x0A;All steps are outputted to add synchro or interesting behaviors...&#x0A;&#x0A;v1.01" bitmap_expanded="1" plugin="" x="399" y="78">
+                                                <bitmap>media/images/box/icons_appu/sayPrecomputed.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[# SayTextPrerender - v1.01
+import altools
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.nStateInit = 0;
+        self.nStatePreparing = 1;
+        self.nStateSpeaking = 2;
+        self.nStateStopped = 3;
+        self.nStep = self.nStateInit;
+    
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def onInput_onStart(self, p):
+        if( self.nStep == self.nStateSpeaking or self.nStep == self.nStatePreparing ):
+            self.log( "%s: already speaking, won't say that sentence: '%s'" % ( self.boxName, p ) );
+            return;
+#        txt = "\\RSPD=85\\ " + altools.transformAsciiAccentForSynthesis( p ); # not usefull now!
+        txt = p;
+        self.nStep = self.nStatePreparing;
+        self.output_onPreparing();
+        if( self.getParameter( "bWithLight" ) ):
+            altools.sayAndCacheAndLight( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        else:
+            altools.sayAndCache( txt, True, self.getParameter( 'bStoreToNonVolatilePath' ), nUseLang = self.getParameter( 'nNumLanguage' ) );
+        if( not self.getParameter( 'bJustPrepare' ) ):
+            self.nStep = self.nStateSpeaking;
+            self.output_onStartSpeaking();
+            if( self.getParameter( "bWithLight" ) ):
+                altools.sayAndCacheAndLight( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+            else:
+                altools.sayAndCache( txt, nUseLang = self.getParameter( 'nNumLanguage' ) );
+        self.nStep = self.nStateStopped;
+        self.output_onStopSpeaking();
+        
+    def onInput_onStop(self):
+        while( self.nStep == self.nStatePreparing ): # can't kill while preparing
+            time.sleep( 0.2 );
+        # on le fait plusieurs fois car des fois on peut se trouver pile entre le set du play et le lancage de la commande
+        for i in range( 3 ):
+            if( self.nStep == self.nStateSpeaking ):
+                os.system( "killall aplay" );     # todo: better killling method!
+                time.sleep( 0.2 );]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="output_onPreparing" type="1" type_size="1" nature="2" inner="0" tooltip="Text are being prepared" id="4" />
+                                                <Output name="output_onStartSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao begin to speak" id="5" />
+                                                <Output name="output_onStopSpeaking" type="1" type_size="1" nature="2" inner="0" tooltip="Nao has stop speaking" id="6" />
+                                                <Parameter name="bWithLight" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="use light in eyes to speak" id="7" />
+                                                <Parameter name="bJustPrepare" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Don&apos;t say the text now, just generate it." id="8" />
+                                                <Parameter name="bStoreToNonVolatilePath" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="copy the generated file to a non volatile path." id="9" />
+                                                <Parameter name="nNumLanguage" inherits_from_parent="0" content_type="1" value="-1" default_value="-1" min="-1" max="30" tooltip="To speak with a different speak language, specify it there (default -1: current one)" id="10" />
+                                            </Box>
+                                            <Box name="EnsureVolumeRange" robot="" id="2" tooltip="Ensure that sound volume is in a specific range&#x0A;v0.9" bitmap_expanded="1" plugin="" x="122" y="305">
+                                                <bitmap>media/images/box/interaction/play_sound.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[# EnsureVolumeRange
+# v0.9
+import abcdk.sound as sound
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        sound.ensureVolumeRange( self.getParameter( "nMinValue" ), self.getParameter( "nMaxValue" ) );
+        self.onStopped() #~ activate output of the box
+
+# EnsureVolumeRange - end
+pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="3" />
+                                                <Parameter name="nMinValue" inherits_from_parent="0" content_type="1" value="65" default_value="58" min="0" max="100" tooltip="Minimal sound volume (in %)" id="4" />
+                                                <Parameter name="nMaxValue" inherits_from_parent="0" content_type="1" value="84" default_value="84" min="0" max="100" tooltip="Maximal sound volume (in %)" id="5" />
+                                            </Box>
+                                            <Box name="IsSufficientTimes" robot="" id="5" tooltip="Output yes if the times has elapsed" bitmap_expanded="1" plugin="" x="99" y="50">
+                                                <bitmap>media/images/box/box-diagram.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[import time
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.timeInit = time.time();
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        durationSec = time.time() - self.timeInit;
+        self.log( "%s: duration this behavior: %f" % ( self.boxName, durationSec ) );
+        if( durationSec > self.getParameter("rMinTime") ):
+            self.output_yes();
+        else:
+            self.output_no();
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="output_yes" type="1" type_size="1" nature="2" inner="0" tooltip="sufficient times" id="4" />
+                                                <Output name="output_no" type="1" type_size="1" nature="2" inner="0" tooltip="not enought time" id="5" />
+                                                <Parameter name="rMinTime" inherits_from_parent="0" content_type="2" value="13" default_value="1" min="0" max="1e+08" tooltip="min time in sec" id="6" />
+                                            </Box>
+                                            <Link inputowner="0" indexofinput="4" outputowner="3" indexofoutput="4" />
+                                            <Link inputowner="0" indexofinput="4" outputowner="4" indexofoutput="6" />
+                                            <Link inputowner="4" indexofinput="2" outputowner="1" indexofoutput="4" />
+                                            <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="1" />
+                                            <Link inputowner="1" indexofinput="2" outputowner="5" indexofoutput="4" />
+                                            <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="1" />
+                                            <Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="5" />
+                                        </Diagram>
+                                    </BehaviorKeyframe>
+                                </BehaviorLayer>
+                                <ActuatorList>
+                                    <ActuatorCurve name="value" actuator="LShoulderPitch" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="42.0098" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="LShoulderRoll" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="19.2459" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="LElbowYaw" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="-37.8837" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="LElbowRoll" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="-37.3516" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="LWristYaw" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="1.0523" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="LHand" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="13.4214" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RShoulderPitch" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="46.7608" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RShoulderRoll" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="-17.5807" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RElbowYaw" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="54.2268" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RElbowRoll" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="37.0927" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RWristYaw" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="-0.353971" />
+                                    </ActuatorCurve>
+                                    <ActuatorCurve name="value" actuator="RHand" recordable="1" mute="0" alwaysVisible="0">
+                                        <Key frame="25" value="10.9414" />
+                                    </ActuatorCurve>
+                                </ActuatorList>
+                            </Timeline>
+                        </Box>
+                        <Box name="Wait" robot="" id="1" tooltip="The wait can be stopped any time, but the box won&apos;t output a signal. You may reset it any time, and it will start over." bitmap_expanded="1" plugin="" x="433" y="304">
+                            <bitmap>media/images/box/wait.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import threading # opkg install python-threading
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        self.tb = False;
+
+    def onUnload(self):
+        self.onInput_onStop();
+
+    def triggerOutput( self, rPeriod = 1 ):
+        self.timerOutput();
+        self.onInput_onStop(); # to clean everything
+
+    def startTimer( self, rPeriod = 1 ):
+        if( self.tb ):
+            self.tb.cancel();
+        self.tb = threading.Timer( rPeriod, self.triggerOutput, [rPeriod] );
+        self.tb.start();
+
+    def onInput_onStart(self):
+        self.startTimer( self.getParameter("Timeout (s)") );
+
+    def onInput_onStop(self):
+        if( self.tb ):
+            self.tb.cancel();
+            self.tb = False;]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Start the Wait box with the configured timeout value." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Signal sent when box behavior is finished." id="3" />
+                            <Output name="timerOutput" type="1" type_size="1" nature="2" inner="0" tooltip="Send a bang after a certain amount of time.&#x0A;WARNING: not outputted if stopped before time lapse." id="4" />
+                            <Parameter name="Timeout (s)" inherits_from_parent="0" content_type="2" value="5" default_value="1" min="0" max="5000" tooltip="After how many seconds the box will timeout and stimulate its ouput." id="5" />
+                        </Box>
+                        <Box name="Text Edit" robot="" id="4" tooltip="Transmits the text you entered when the input is stimulated." bitmap_expanded="1" plugin="textedit_plugin" x="462" y="426">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+
+	def onInput_onStart(self):
+		self.onStopped("Leave x sec after no more music detected")]]>
+</content>
+                            </script>
+                            <pluginContent>
+                                <text>Leave x sec after no more music detected</text>
+                            </pluginContent>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Transmits text." id="2" />
+                            <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="3" />
+                        </Box>
+                        <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="3" />
+                        <Link inputowner="6" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="0" indexofinput="4" outputowner="17" indexofoutput="4" />
+                        <Link inputowner="1" indexofinput="2" outputowner="8" indexofoutput="4" />
+                        <Link inputowner="1" indexofinput="2" outputowner="6" indexofoutput="3" />
+                        <Link inputowner="3" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="17" indexofinput="2" outputowner="1" indexofoutput="4" />
+                        <Link inputowner="1" indexofinput="2" outputowner="3" indexofoutput="6" />
+                        <Link inputowner="1" indexofinput="3" outputowner="3" indexofoutput="5" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList />
+        </Timeline>
+    </Box>
+</ChoregrapheProject>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		user
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr", "en"]
+	</lang>
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      now - self.last_start > 60*5 and nao.cpu_temperature > 102
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

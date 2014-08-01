@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="2">
+    <Box name="root" robot="" id="-1" tooltip="Root box of Choregraphe&apos;s project. Highest level possible." bitmap_expanded="1" plugin="" x="0" y="0">
+        <bitmap>media/images/box/root.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline fps="10" resources_acquisition="0" size="300" enable="0" start_frame="0" end_frame="-1" scale="10">
+            <watches />
+            <BehaviorLayer name="behavior_layer1" mute="0">
+                <BehaviorKeyframe name="keyframe1" index="1" bitmap="">
+                    <Diagram scale="-1">
+                        <Box name="Autonomous_GetOneWaitAnimName" robot="" id="1" tooltip="Choose a wait animation &apos;randomly&apos;" bitmap_expanded="1" plugin="" x="103" y="74">
+                            <bitmap>media/images/box/icons_appu/life.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import behaviordata
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        strName = behaviordata.getOneWaitAnimationName();
+        if( strName != "" ):
+            self.output_name( strName ) #~ activate output of the box        
+            time.sleep( 0.3 );
+            self.output_launch();
+        else:
+            self.output_none() #~ activate output of the box
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Output name="output_name" type="3" type_size="1" nature="2" inner="0" tooltip="Signal sent when box behavior is finished." id="3" />
+                            <Output name="output_launch" type="1" type_size="1" nature="2" inner="0" tooltip="" id="4" />
+                            <Output name="output_none" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
+                        </Box>
+                        <Box name="LoadXarPreLoad_ref" robot="" id="5" tooltip="Load a xar and execute it.&#x0A;v1.12&#x0A;&#x0A;Features:&#x0A;- loading at project init&#x0A;- loading at random moment&#x0A;- loading on the fly if not previously loaded&#x0A;&#x0A;The behaviors is reusable many times without reloading it.&#x0A;&#x0A;You can change behavior name at run time, reuse the box to load another behavior...&#x0A;&#x0A;Information about current state is posted to ALMemory so we can synchronise betweend process or robot.&#x0A;&#x0A;You can specify another robot than the local one.&#x0A;&#x0A;KNOWN LIMITATIONS: to detect end of a remote robot, your behavior should post something else than a bang at the end !!!" bitmap_expanded="1" plugin="" x="297" y="70">
+                            <bitmap>media/images/box/icons_appu/WheelLoader.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# LoadXar preload script v1.12
+
+import mutex
+import altools # just for the list of currently launched xar
+import time
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self);
+        self.strLoadedBehaviorID = -1;
+        self.BIND_PYTHON( self.getName(),"myDataChanged" );
+        self.mutex = mutex.mutex();
+        self.strFilenameXar = self.getParameter("path") 
+        self.strHostName = "";
+        self.mem = None;
+        self.fm = None;
+        self.bHostUnreachable = False;
+#        self.createProxy();
+        self.strLoadedBehaviorID = -1;
+        if( self.getParameter("bPreload") ):
+            self.loadBehavior();
+
+    def __del__(self):
+        if( self.strLoadedBehaviorID != -1 ):
+            try:
+                self.fm.deleteBehavior(self.strLoadedBehaviorID)
+            except BaseException, err:
+                strMessage = "ERROR: %s: deleteBehavior: deleting '%s' failure" % ( self.boxName, self.strFilenameXar );
+                self.log( strMessage );
+                altools.logToFile( strMessage );
+                self.output_OnError( "deleting failure" );
+            self.informOthers( False );
+    # __del__ - end
+    
+    def onLoad(self):
+        self.strNameVarEnd = ""; # stores the variable to wait.
+        self.bFinished = False;  # put to True when the behavior has stopped.    
+        self.returnValue = 0;    
+        self.bMustStop = False;
+        self.bIsRunning = False;       
+   # onLoad - end
+    
+    
+    def createProxy( self ):
+        if( self.strHostName != self.getParameter( 'strHostName' ) ):
+            self.strHostName = self.getParameter( 'strHostName' );
+            self.log( "%s: connecting to '%s'" % (self.boxName, self.strHostName ) );
+            try:
+                self.fm = ALProxy( "ALFrameManager", self.strHostName, 9559 );        
+                self.mem = ALProxy( "ALMemory", self.strHostName, 9559 );
+                self.bHostUnreachable = False;
+            except:
+                strMessage = "%s: ERROR: host '%s' unreachable !" % ( self.boxName, self.strHostName );
+                self.log( strMessage );
+                altools.logToFile( strMessage );                
+                self.output_OnError( "host unreachable" );                
+                self.bHostUnreachable = True;
+    # createProxy - end
+    
+    def isBehaviorFinished_alternate( self, bResetIt = False ):
+        "alternate method acked to detect the end - work even on another robot"
+        "return true if the behavior is finished"
+        "if bResetIt: mark it so as to notice that it hasn't finished yet."
+
+        # for the moment it's not really clean, when the framemanager inserts a 0 in a variable whose value already was 0, then it's the end...
+        if( bResetIt ):
+            self.mem.raiseEvent( self.strNameVarEnd, True );
+        # le bug courant: pour detecter correctement la fin sur un robot a distance, il faut que le behavior poste autre chose qu'un bang a la fin
+        # on ne peut pas subscribe sur un robot distant, et le load init a bang la variable, et poste ensuite la valeur a la fin (souvent bang)
+        # et on ne peut pas initialiser a autre chose, car ca déchargerait le comportement...
+        if( self.strHostName == 'localhost' ):
+            return False;
+        value = self.mem.getData( self.strNameVarEnd )
+        bFinished = value != None;
+        if( bFinished ):
+            self.returnValue = value;
+        #~ self.log( "finis___%s: %s" % (strNameVarEnd, str( bFinished ) ) );
+        return bFinished;    
+    # isBehaviorFinished - end
+        
+    def informOthers( self, bLoaded, bRunning = False ):
+        # post in almemory information about this behavior, so, others Nao can synchronise.
+        self.mem.insertData( self.strFilenameXar + '_loaded', int( bLoaded ) );
+        self.mem.insertData( self.strFilenameXar + '_running', int( bRunning ) );        
+    # informOthers - end
+    
+    def loadBehavior( self ):
+        if( self.strLoadedBehaviorID == -1 or self.strFilenameXar != self.getParameter("path") ):
+        
+            self.createProxy(); # recreate proxy in case of strHostName has been changed            
+            if( self.bHostUnreachable ):
+                return;
+            if( self.strLoadedBehaviorID != -1 ):    
+                try:
+                    self.fm.deleteBehavior( self.strLoadedBehaviorID );
+                except BaseException, err:
+                    strMessage = "ERROR: %s: deleteBehavior: deleting '%s' failure" % ( self.boxName, self.strFilenameXar );
+                    self.log( strMessage );
+                    altools.logToFile( strMessage );
+                    self.output_OnError( "deleting failure (2)" );
+                
+                self.informOthers( False );
+            self.strFilenameXar = self.getParameter("path"); 
+            if( self.strFilenameXar == "" ):
+                self.log( self.boxName + ": loadBehavior: no behavior => nothing" );        
+                return;            
+#            self.strLoadedBehaviorID = self.fm.newBehaviorFromFile( self.strFilenameXar, "" );
+#            self.mem.raiseEvent( self.strLoadedBehaviorID + "__onStopped", True );
+            try:
+                timeBegin = time.time();
+                self.strLoadedBehaviorID = self.fm.newBehaviorFromFile( self.strFilenameXar, "" );            
+                duration = time.time() - timeBegin;
+                print( "%s: loading time: %fs" % ( self.strFilenameXar, duration ) );
+            except BaseException, err:
+                strMessage = "ERROR: %s: newBehaviorFromFile: loading '%s' failure" % ( self.boxName, self.strFilenameXar );
+                self.log( strMessage );
+                altools.logToFile( strMessage );                
+                self.output_OnError( "loading failure" );
+                return;
+            self.informOthers( True );
+        self.output_onReadyToLaunch(); # even if it was previously loaded, we are ready to launch...
+    
+    def onUnload(self):
+        self.onInput_onStop();
+        
+    def onInput_onLoadXar(self):
+        while( self.mutex.testandset() == False ):
+            print( "%s: onInput_onLoadXar: locked" % self.boxName );
+            time.sleep( 0.05 );
+        self.loadBehavior();
+        self.mutex.unlock();    
+    # onInput_onLoadXar - end
+
+    def onInput_onPlayXar(self):
+        self.log( self.boxName + ": start - begin" );
+        
+        if( self.bIsRunning ):
+            self.log( self.boxName + ": already started => nothing" );
+            return;
+            
+        if( self.bHostUnreachable ):
+            return;
+            
+        while( self.mutex.testandset() == False ):
+            print( "%s: onInput_onPlayXar: locked" % self.boxName );
+            time.sleep( 0.05 );
+            
+        if( self.bIsRunning ):
+            self.log( self.boxName + ": already started => nothing( 2 )" );
+            self.mutex.unlock();            
+            return;
+            
+   
+        if( altools.isActiveXar( self.strFilenameXar ) ):
+            self.log( self.boxName + ": Xar already active => nothing" );
+            self.mutex.unlock();
+            return;
+            
+        self.bMustStop = False;            
+            
+        self.createProxy(); # recreate proxy in case of strHostName has been changed
+        
+        self.loadBehavior(); # loadit in case of loading not already done before
+        if( self.strLoadedBehaviorID == -1 ):
+            self.mutex.unlock();        
+            return; # loading failed
+            
+        if( self.bMustStop ):
+            # we receive a stop while loading.
+            self.mutex.unlock();            
+            return;
+        
+        altools.addActiveXar( self.strHostName + self.strFilenameXar );
+            
+        self.bIsRunning = True;
+        
+        timeBegin = time.time();        
+        try:
+            # to manage the end of the behavior
+            self.bFinished = False;
+            self.returnValue = 0;
+            self.strNameVarEnd = self.strLoadedBehaviorID + "__onStopped";
+#            self.log( "strNameVarEnd: " + self.strNameVarEnd );
+#            self.isBehaviorFinished_alternate( True );            # will destroy the behavior
+
+            self.mem.subscribeToEvent( self.strNameVarEnd, self.getName(), "myDataChanged" ); # faire un event au lieu d'un micro event péte le retour vers le framemanager et empeche le comportement d'etre déloadé ! c'est une utilisation détourné d'un bug !!!
+#            self.mem.subscribeToMicroEvent( self.strNameVarEnd, self.getName(), "", "myDataChanged" );
+            
+            self.output_onPlayingNow();
+            self.informOthers( True, True );
+            self.fm.playBehavior( self.strLoadedBehaviorID );
+#            self.fm.completeBehavior( self.strLoadedBehaviorID ); # would be good, it it leaves hand to user !!!
+            # wait the end
+#            self.log( "----> 1 self.bFinished: %d, self.isBehaviorFinished_alternate(): %d" % (self.bFinished, self.isBehaviorFinished_alternate() ) );            
+#            self.log( "----> 1 varend: %s" % str( self.mem.getData( self.strNameVarEnd, -1 ) ) );
+            while( not self.bFinished and not self.isBehaviorFinished_alternate() and not self.bMustStop ):
+                # on 1.6.0: we are passing in this loop while the behavior is running (playBehavior is not blocking)
+                time.sleep( 0.2 );
+#                self.log( "waiting..." );
+            #~ self.strLoadedBehaviorID = -1;
+#            self.mem.unsubscribeToMicroEvent( self.strNameVarEnd, self.getName() );
+        except BaseException, err:
+            self.strLoadedBehaviorID = -1; # often, it's because this behaviors has disapperd, so we reset it for next time
+            strMessage = "ERROR: %s: '%s'" % ( self.boxName, err );
+            self.log( strMessage );
+            altools.logToFile( strMessage );
+            self.onInput_onError( err );
+#        self.log( "----> 3 self.bFinished: %d, self.isBehaviorFinished_alternate(): %d" % (self.bFinished, self.isBehaviorFinished_alternate() ) );
+#        self.log( "----> 3 varend: %s" % str( self.mem.getData( self.strNameVarEnd, -1 ) ) );
+        duration = time.time() - timeBegin;
+        print( "%s: executing time: %fs" % ( self.strFilenameXar, duration ) );
+        self.informOthers( True, False );
+        self.bIsRunning = False;
+        self.onStopped( self.returnValue );        
+        altools.removeActiveXar( self.strHostName + self.strFilenameXar );
+        self.mutex.unlock();
+    # onInput_onPlayXar - end
+        
+    def onInput_onStop(self):
+        self.bMustStop = True;
+        if( self.strLoadedBehaviorID != -1 ):
+            try:
+                print( "%s: STOPPING: exitBehavior - BEGIN" % self.boxName );
+                self.fm.exitBehavior( self.strLoadedBehaviorID ); # will send a stop # TODO: mettre ici deleteBehavior pour liberer la memoire (l'exit est fait dedans)
+                print( "%s: STOPPING: exitBehavior - END" % self.boxName );
+            except BaseException, err:
+                strMessage =  "ERROR: %s: exitBehavior: stopping/deleting '%s' failure" % ( self.boxName, self.strFilenameXar );
+                self.log( strMessage );
+                altools.logToFile( strMessage );                
+
+            self.bFinished = True; # allow us to be sure that we will get out of the "while" even if exitBehavior don't put the variable.
+
+    def onInput_onError(self, strErrorDesc):
+        self.output_OnError(str( strErrorDesc) );
+    
+    def myDataChanged(self, pDataName, pValue, pMessage):
+        # pb: on n'est pas rappellé si on etait sur une autre ip que la notre !
+        if( pDataName == self.strNameVarEnd ):
+            self.bFinished = True;
+            self.returnValue = pValue;
+            
+pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onLoadXar" type="1" type_size="1" nature="1" inner="0" tooltip="Load the xar, but not launch it.&#x0A;&#x0A;This method does nothing if parameter bPreload is set (and you don&apos;t change the behavior name on the fly)." id="2" />
+                            <Input name="onPlayXar" type="1" type_size="1" nature="2" inner="0" tooltip="Play the xar now.&#x0A;If not previously loaded, load it on the fly, then run it." id="3" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="4" />
+                            <Output name="output_onReadyToLaunch" type="1" type_size="1" nature="2" inner="0" tooltip="The behavior is loaded and ready to launch.&#x0A;&#x0A;Warning: this output can be triggered more than once. And won&apos;t be triggered at init phase when bPreload is set." id="5" />
+                            <Output name="output_onPlayingNow" type="1" type_size="1" nature="2" inner="0" tooltip="This output is triggered just before the behavior is started." id="6" />
+                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished.&#x0A;The value returned is the value returned by the behavior." id="7" />
+                            <Output name="output_OnError" type="3" type_size="1" nature="2" inner="0" tooltip="in case of an error occurs, this output will be triggered" id="8" />
+                            <Parameter name="path" inherits_from_parent="0" content_type="3" value="" default_value="/home/nao/behaviors/SayHello/behavior.xar" custom_choice="0" tooltip="" id="9" />
+                            <Parameter name="bPreload" inherits_from_parent="0" content_type="0" value="0" default_value="1" tooltip="Disable it if you don&apos;t want to have loading at the initialisation of the box" id="10" />
+                            <Parameter name="strHostName" inherits_from_parent="0" content_type="3" value="localhost" default_value="localhost" custom_choice="0" tooltip="hostname/ip of the robot on which you want to launch the behavior. default: localhost: on your own robot" id="11" />
+                        </Box>
+                        <Box name="LogBehavior_ref" robot="" id="2" tooltip="Send trace to a log per behavior" bitmap_expanded="1" plugin="" x="147" y="378">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import behaviordata
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"),"init" );        
+
+    def onLoad(self):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"),"loadbox" );
+
+    def onUnload(self):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"),"unloadbox" );
+
+    def onInput_onInput_start(self, p):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"), "launching: " + p );
+        
+    def onInput_onInput_loaded(self):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"), "loaded " );
+
+    def onInput_onInput_error(self, p):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"), "error: " + p );
+        
+    def onInput_onInput_stop(self, p):
+        behaviordata.logBehavior( self.getParameter("strBehaviorName"), "stop, ret: " + str( p ) );
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommanded to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onInput_start" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onInput_loaded" type="1" type_size="1" nature="1" inner="0" tooltip="" id="3" />
+                            <Input name="onInput_error" type="3" type_size="1" nature="1" inner="0" tooltip="" id="4" />
+                            <Input name="onInput_stop" type="3" type_size="1" nature="2" inner="0" tooltip="" id="5" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="6" />
+                            <Parameter name="strBehaviorName" inherits_from_parent="0" content_type="3" value="WaitAnim" default_value="Noname" custom_choice="0" tooltip="" id="7" />
+                        </Box>
+                        <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
+                        <Link inputowner="5" indexofinput="3" outputowner="1" indexofoutput="4" />
+                        <Link inputowner="5" indexofinput="9" outputowner="1" indexofoutput="3" />
+                        <Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="7" />
+                        <Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="8" />
+                        <Link inputowner="2" indexofinput="2" outputowner="1" indexofoutput="3" />
+                        <Link inputowner="2" indexofinput="4" outputowner="5" indexofoutput="8" />
+                        <Link inputowner="2" indexofinput="5" outputowner="5" indexofoutput="7" />
+                        <Link inputowner="2" indexofinput="3" outputowner="5" indexofoutput="6" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList />
+        </Timeline>
+    </Box>
+</ChoregrapheProject>

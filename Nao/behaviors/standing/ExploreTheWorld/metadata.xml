@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		exploration
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr"]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and 10 > nao.walking_activity and nao.battery_level > 2 and nao.life_area >= altools.const.area_limited and 68 > nao.body_temperature and now - self.last_stop > 1500
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

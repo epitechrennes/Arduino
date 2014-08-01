@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		init_interaction
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr , "en"]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and nao.battery_level > 2 and 68 > nao.body_temperature and now - self.last_stop > 60*60*3 and now - nao.any_behaviors_last_start > 20 and 11 > now - env.human_last_true and ((nao.excitement > 0.6 and 0.8 > nao.excitement and env.human_visible_face_number > 1) or nao.excitement > 0.8 )
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

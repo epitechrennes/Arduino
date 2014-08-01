@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		[]
+	</lang>
+	<fall_authorised>
+		1
+	</fall_authorised>    
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and now - self.last_stop > 60*10 and ( nao.walking_activity > 30 or nao.body_temperature > 72 )
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		[]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and 1.4 > env.camera_medium_average_moving and now - self.last_stop > 10
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

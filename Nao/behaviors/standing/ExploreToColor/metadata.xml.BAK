@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr"]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and nao.life_area >= altools.const.area_limited and 72 > nao.body_temperature and now - self.last_stop > 50
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

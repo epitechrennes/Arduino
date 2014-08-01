@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		dance
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		["fr" , "en"]
+	</lang>		
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      nao.body_position == "standing" and nao.battery_level > 3 and 70 > nao.body_temperature and now - self.last_stop > 60*60*3 and now - nao.any_behaviors_last_start > 20  and nao.excitement > 0.3
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

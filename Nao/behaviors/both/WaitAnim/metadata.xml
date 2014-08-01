@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		autonomous
+	</type>
+	<user_note>
+		0.5
+	</user_note>
+	<enabled>
+		1
+	</enabled>
+	<lang>
+		"all"
+	</lang>
+	  <starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      now - self.last_stop > 5 and (   (( ( nao.boredom > 8 ) or ( nao.boredom > 4 and nao.body_position == "standing" ) ) and 72 > nao.body_temperature) or ( nao.boredom > 50 )   )
+		    </condition_value>
+	    </condition>
+	  </starting-condition>
+  </behavior>

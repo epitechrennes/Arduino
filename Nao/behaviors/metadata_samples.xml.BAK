@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <behavior>
+	<type>
+		user			# could be: "system", "user" (deprecated), "autonomous", "init_interaction", "interaction"
+	</type>
+	<user_note> 		# average world user note
+		0.5
+	</user_note>
+	<lang>
+		["fr", "en"] 	# handled languages by this behaviors (default: nothing => all); could be: "all", or a list ["fr", "en"], or empty
+	</lang>	
+	<enabled>
+		1
+	</enabled>
+	<interruptable_by_timeout>
+		1  	# can be: 0 or 1; default is 1
+	</interruptable_by_timeout>
+	<fall_authorised>
+		1   # can be: 0 or 1; default is 0
+	</fall_authorised>	
+	<starting-condition>
+	    <condition>
+	    	<script_type>
+	    		python
+	    	</script_type>
+	    	<condition_value>
+		      10 > now - env.human_is_visible_last_true and now - self.last_start > 17 and nao.body_position == "standing" and nao.battery_level > 2 and nao.life_area >= altools.const.area_limited and 68 > nao.body_temperature and now - self.last_stop > 4*60*60
+		      
+# regle d'anti rebond:  and 60 > now - env.music_darkness_last_false => evite de se relancer tant que la condition est vraie
+
+		    </condition_value>
+	    </condition>
+	</starting-condition>
+  </behavior>
